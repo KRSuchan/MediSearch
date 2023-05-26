@@ -286,7 +286,7 @@
                               <Font name="LG PC" size="12.0" />
                            </font>
                         </TitledPane>
-                        <Button fx:id="AdvSearchBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="290.0" layoutY="485.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="59.0" text="검색">
+                        <Button fx:id="AdvSearchBtn" onAction="#onAdvSearchBtnClick" alignment="CENTER" contentDisplay="CENTER" layoutX="290.0" layoutY="485.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="59.0" text="검색">
                            <font>
                               <Font name="LG PC" size="16.0" />
                            </font>

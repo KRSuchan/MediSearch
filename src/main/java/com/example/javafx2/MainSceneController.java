@@ -199,8 +199,11 @@ public class MainSceneController {
     @FXML
     protected void onAdvSearchBtnClick(ActionEvent event) {
         try {
+
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource(""));
+            fxmlLoader.setLocation(getClass().getResource("ResultScene.fxml"));
+            ResultSceneController controller = fxmlLoader.getController();
+            //controller.initData();
             Scene scene = new Scene(fxmlLoader.load(), 576, 509);
             Stage stage = new Stage();
             stage.setTitle("Results");
