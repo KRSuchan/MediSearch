@@ -115,7 +115,7 @@ public class HospInfo {
                     }
                 }
                 if(currentPage==1){
-                    hospInfoList = new String[Integer.parseInt(totalCnt)][8];
+                    hospInfoList = new String[Integer.parseInt(totalCnt)][7];
                 }
                 for (int temp = 0; temp < nList1.getLength(); temp++) {
                     Node nNode = nList1.item(temp);
@@ -144,7 +144,6 @@ public class HospInfo {
                             hospInfoList[currRow][4]=getTagValue("distance", eElement);
                             hospInfoList[currRow][5]=getTagValue("telno", eElement);
                             hospInfoList[currRow][6]=getTagValue("hospUrl", eElement);
-                            hospInfoList[currRow][7]=getTagValue("dgsbjtCd", eElement);
                         }
                     }
                 }
@@ -155,6 +154,45 @@ public class HospInfo {
         }
         return -1;
     }
+
+    public int getErrCode() {
+        return Integer.parseInt(errCode);
+    }
+
+    public String getErrMsg() {
+        return errMsg;
+    }
+
+    public int getTotalCnt() {
+        return Integer.parseInt(totalCnt);
+    }
+/*
+    hospInfoList[currRow][0]=getTagValue("ykiho", eElement);
+    hospInfoList[currRow][1]=getTagValue("yadmNm", eElement);
+    hospInfoList[currRow][2]=getTagValue("clCdNm", eElement);
+    hospInfoList[currRow][3]=getTagValue("addr", eElement);
+    hospInfoList[currRow][4]=getTagValue("distance", eElement);
+    hospInfoList[currRow][5]=getTagValue("telno", eElement);
+    hospInfoList[currRow][6]=getTagValue("hospUrl", eElement);  */
+    public String getYadmNm(int numOfRow){
+        return hospInfoList[numOfRow][0];
+    }
+    public String getClCdNm(int numOfRow){
+        return hospInfoList[numOfRow][0];
+    }
+    public String getAddr(int numOfRow){
+        return hospInfoList[numOfRow][0];
+    }
+    public double getDistance(int numOfRow){
+        return Double.parseDouble(hospInfoList[numOfRow][0]);
+    }
+    public String getTelno(int numOfRow){
+        return hospInfoList[numOfRow][0];
+    }
+    public String getHospUrl(int numOfRow){
+        return hospInfoList[numOfRow][0];
+    }
+
     private static String getTagValue(String tag, Element eElement) {
         try{
             NodeList nList =eElement.getElementsByTagName(tag).item(0).getChildNodes();

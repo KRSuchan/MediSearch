@@ -136,8 +136,8 @@ public class MyPos {
     public int getTotalCnt() {
         return Integer.parseInt(totalCnt);
     }
-    public String getErrCode(){
-        return errCode;
+    public int getErrCode() {
+        return Integer.parseInt(errCode);
     }
 
     public String getErrMsg() {

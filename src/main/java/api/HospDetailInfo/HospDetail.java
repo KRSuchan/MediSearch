@@ -160,20 +160,20 @@ public class HospDetail {
         return clCdNm;
     }
 
-    public String getErrCode() {
-        return errCode;
+    public int getErrCode() {
+        return Integer.parseInt(errCode);
     }
 
-    public String getEstbDd() {
-        return estbDd;
+    public int getEstbDd() {
+        return Integer.parseInt(estbDd);
     }
 
     public String getTelNum() {
         return telNum;
     }
 
-    public String getTotalCnt() {
-        return totalCnt;
+    public int getTotalCnt() {
+        return Integer.parseInt(totalCnt);
     }
 
     public String getYadmNm() {

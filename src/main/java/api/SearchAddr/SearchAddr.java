@@ -39,7 +39,7 @@ public class SearchAddr {
     private String errMsg = "null";
     private String[][] addressList;
     /*
-     * addressLists[n번째리스트][의 0:행정구역코드 1: 도로명코드 2: 지하여부 3: 건물본번 4: 건물부번 5: 도로명주소 6: 지번주소]
+     * addressList[n번째리스트][의 0:행정구역코드 1: 도로명코드 2: 지하여부 3: 건물본번 4: 건물부번 5: 도로명주소 6: 지번주소]
      * */
     public int searchAddress(String keyword){
         try {
@@ -111,8 +111,8 @@ public class SearchAddr {
     public int getTotalCount(){
         return Integer.parseInt(totalCnt);
     }
-    public String getErrorCode(){
-        return errCode;
+    public int getErrCode() {
+        return Integer.parseInt(errCode);
     }
     public String getErrorMessage(){
         return errMsg;
@@ -148,6 +148,34 @@ public class SearchAddr {
             cnt = 99;
         }
         return cnt;
+    }
+    /* addressList[currRow][0]=getTagValue("admCd", eElement); // 행정구역코드
+       addressList[currRow][1]=getTagValue("rnMgtSn", eElement); // 도로명코드
+       addressList[currRow][2]=getTagValue("udrtYn", eElement); // 지하여부
+       addressList[currRow][3]=getTagValue("buldMnnm", eElement); // 건물본번
+       addressList[currRow][4]=getTagValue("buldSlno", eElement); // 건물부번
+       addressList[currRow][5]=getTagValue("roadAddr", eElement); // 도로명주소
+       addressList[currRow][6]=getTagValue("jibunAddr", eElement); // 지번주소  */
+    public int getAdmCd(int numOfRow){
+        return Integer.parseInt(addressList[numOfRow][0]);
+    }
+    public int getRnMgtSn(int numOfRow){
+        return Integer.parseInt(addressList[numOfRow][1]);
+    }
+    public int getUdrtYn(int numOfRow){
+        return Integer.parseInt(addressList[numOfRow][2]);
+    }
+    public int getBuldMnnm(int numOfRow){
+        return Integer.parseInt(addressList[numOfRow][3]);
+    }
+    public int getBuldSlno(int numOfRow){
+        return Integer.parseInt(addressList[numOfRow][4]);
+    }
+    public String getRoadAddr(int numOfRow){
+        return addressList[numOfRow][5];
+    }
+    public String getJibunAddr(int numOfRow){
+        return addressList[numOfRow][6];
     }
     private static String getTagValue(String tag, Element eElement) {
         try{
