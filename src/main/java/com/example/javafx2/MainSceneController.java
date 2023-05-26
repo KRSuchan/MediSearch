@@ -4,11 +4,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainSceneController {
 
@@ -200,11 +203,14 @@ public class MainSceneController {
     protected void onAdvSearchBtnClick(ActionEvent event) {
         try {
 
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("ResultScene.fxml"));
+            List<ResultData> resultList =new ArrayList<>();
+            resultList.add(new ResultData("성모병원","대천로103번길","010-420-132"));
+            resultList.add(new ResultData("성모원2","대천로1","010-4223"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ResultScene.fxml"));
+            Parent root = fxmlLoader.load();
             ResultSceneController controller = fxmlLoader.getController();
-            //controller.initData();
-            Scene scene = new Scene(fxmlLoader.load(), 576, 509);
+            controller.initData(resultList);
+            Scene scene = new Scene(root, 576, 509);
             Stage stage = new Stage();
             stage.setTitle("Results");
             stage.setScene(scene);
