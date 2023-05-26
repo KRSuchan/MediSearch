@@ -1,5 +1,4 @@
 package api.SearchAddr;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -9,7 +8,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 //  주소검색API 기본 주소 : https://www.juso.go.kr/addrlink/addrLinkApi.do?
@@ -34,15 +32,15 @@ import java.util.StringTokenizer;
      */
 
 public class SearchAddr {
-    private String confmkey = "U01TX0FVVEgyMDIzMDQyOTEyNDg0NTExMzczMzU=";
-    private String baseUrl = "https://www.juso.go.kr/addrlink/addrLinkApi.do";
+    private final String confmkey = "U01TX0FVVEgyMDIzMDQyOTEyNDg0NTExMzczMzU=";
+    private final String baseUrl = "https://www.juso.go.kr/addrlink/addrLinkApi.do";
     private String totalCnt = "0";
     private String errCode = "-1";
     private String errMsg = "null";
-    private ArrayList<String[]> addressLists  = new ArrayList<>();
+    private String[][] addressList;
     /*
-    * addressLists[n번째리스트][의 0:행정구역코드 1: 도로명코드 2: 지하여부 3: 건물본번 4: 건물부번 5: 도로명주소 6: 지번주소]
-    * */
+     * addressLists[n번째리스트][의 0:행정구역코드 1: 도로명코드 2: 지하여부 3: 건물본번 4: 건물부번 5: 도로명주소 6: 지번주소]
+     * */
     public int searchAddress(String keyword){
         try {
             int currentPage = 0;
@@ -75,6 +73,9 @@ public class SearchAddr {
                         errMsg=getTagValue("errorMessage", eElement);
                     }
                 }
+                if(currentPage==1){
+                    addressList = new String[Integer.parseInt(totalCnt)][7];
+                }
                 if (!errCode.equals("0")){
                     System.out.println("errCode : "+errCode+"\nerrMsg : "+errMsg);
                     return -1;
@@ -83,19 +84,18 @@ public class SearchAddr {
                     return 1;
                 }else{
                     for (int temp = 0; temp < nList2.getLength(); temp++) {
-                        String[] addrData = new String[7];
                         Node nNode = nList2.item(temp);
                         if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                             Element eElement = (Element) nNode;
-                            addrData[0]=getTagValue("admCd", eElement); // 행정구역코드
-                            addrData[1]=getTagValue("rnMgtSn", eElement); // 도로명코드
-                            addrData[2]=getTagValue("udrtYn", eElement); // 지하여부
-                            addrData[3]=getTagValue("buldMnnm", eElement); // 건물본번
-                            addrData[4]=getTagValue("buldSlno", eElement); // 건물부번
-                            addrData[5]=getTagValue("roadAddr", eElement); // 도로명주소
-                            addrData[6]=getTagValue("jibunAddr", eElement); // 지번주소
+                            int currRow = temp+(currentPage-1)*countPerPage;
+                            addressList[currRow][0]=getTagValue("admCd", eElement); // 행정구역코드
+                            addressList[currRow][1]=getTagValue("rnMgtSn", eElement); // 도로명코드
+                            addressList[currRow][2]=getTagValue("udrtYn", eElement); // 지하여부
+                            addressList[currRow][3]=getTagValue("buldMnnm", eElement); // 건물본번
+                            addressList[currRow][4]=getTagValue("buldSlno", eElement); // 건물부번
+                            addressList[currRow][5]=getTagValue("roadAddr", eElement); // 도로명주소
+                            addressList[currRow][6]=getTagValue("jibunAddr", eElement); // 지번주소
                         }
-                        addressLists.add(addrData);
                     }
                 }
             }while((Integer.parseInt(totalCnt)/countPerPage+1 != currentPage)&&(currentPage<90));
@@ -105,8 +105,8 @@ public class SearchAddr {
             return -1;
         }
     }
-    public ArrayList<String[]> getResultLists(){
-        return addressLists;
+    public String[][] getResultList(){
+        return addressList;
     }
     public int getTotalCount(){
         return Integer.parseInt(totalCnt);
