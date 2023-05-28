@@ -124,13 +124,13 @@ public class SearchAddr {
         String newString = str.replaceAll("[&|=|%]", "");
         return newString;
     }
-    /* addressList[currRow][0]=getTagValue("admCd", eElement); // 행정구역코드
-       addressList[currRow][1]=getTagValue("rnMgtSn", eElement); // 도로명코드
-       addressList[currRow][2]=getTagValue("udrtYn", eElement); // 지하여부
-       addressList[currRow][3]=getTagValue("buldMnnm", eElement); // 건물본번
-       addressList[currRow][4]=getTagValue("buldSlno", eElement); // 건물부번
-       addressList[currRow][5]=getTagValue("roadAddr", eElement); // 도로명주소
-       addressList[currRow][6]=getTagValue("jibunAddr", eElement); // 지번주소  */
+    /* addressList[currRow][0] // 행정구역코드
+       addressList[currRow][1] // 도로명코드
+       addressList[currRow][2] // 지하여부
+       addressList[currRow][3] // 건물본번
+       addressList[currRow][4] // 건물부번
+       addressList[currRow][5] // 도로명주소
+       addressList[currRow][6] // 지번주소  */
     public int getAdmCd(int numOfRow){
         return Integer.parseInt(addressList[numOfRow][0]);
     }
