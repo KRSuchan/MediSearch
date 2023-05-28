@@ -45,13 +45,8 @@ public class SearchAddr {
         try {
             int currentPage = 0;
             int countPerPage = 100;
-            if(validCheckIsEmpty(keyword)==1){
-                errCode = "unValid Character";
-                errMsg = "특수문자 포함 혹은 빈 문자";
-                System.out.println("errCode : "+errCode+"\nerrMsg : "+errMsg);
-                return -1;
-            }
-            String mappedWord = charMapper(keyword);
+            String newKeyword = mapperSpecialLetters(keyword);
+            String mappedWord = charMapper(newKeyword);
             do{
                 currentPage++;
                 URL url = new URL(baseUrl+"?currentPage="+currentPage+"&countPerPage="+countPerPage+"&keyword="+mappedWord+"&confmKey="+confmkey);
@@ -125,29 +120,9 @@ public class SearchAddr {
         }
         return newWord;
     }
-    public static int validCheckIsEmpty(String str) {
-        int cnt = 0;
-
-        if (str == null || "".equals(str)) {
-            cnt = 1;
-        } else {
-            // 특수문자 있을시
-            if (validCheckSpecialLetters(str) > 0) {
-                cnt = 1;
-            } else {
-                cnt = 0;
-            }
-        }
-        return cnt;
-    }
-
-    // 특수문자 체크(없으면 0)
-    public static int validCheckSpecialLetters(String str) {
-        int cnt = 0;
-        if ((!str.matches("[0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힝|)|(]*"))) {
-            cnt = 99;
-        }
-        return cnt;
+    private static String mapperSpecialLetters(String str) {
+        String newString = str.replaceAll("[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9,. ]", "");
+        return newString;
     }
     /* addressList[currRow][0]=getTagValue("admCd", eElement); // 행정구역코드
        addressList[currRow][1]=getTagValue("rnMgtSn", eElement); // 도로명코드
