@@ -144,7 +144,7 @@ public class SearchAddr {
     // 특수문자 체크(없으면 0)
     public static int validCheckSpecialLetters(String str) {
         int cnt = 0;
-        if ((!str.matches("[0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힝| ]*"))) {
+        if ((!str.matches("[0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힝|)|(]*"))) {
             cnt = 99;
         }
         return cnt;
