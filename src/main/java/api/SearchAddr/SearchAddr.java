@@ -45,7 +45,7 @@ public class SearchAddr {
         try {
             int currentPage = 0;
             int countPerPage = 100;
-            String newKeyword = mapperSpecialLetters(keyword);
+            String newKeyword = removeSpecialLetters(keyword);
             String mappedWord = charMapper(newKeyword);
             do{
                 currentPage++;
@@ -120,7 +120,7 @@ public class SearchAddr {
         }
         return newWord;
     }
-    private static String mapperSpecialLetters(String str) {
+    private static String removeSpecialLetters(String str) {
         String newString = str.replaceAll("[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9,. ]", "");
         return newString;
     }
