@@ -45,11 +45,12 @@ public class SearchAddr {
         try {
             int currentPage = 0;
             int countPerPage = 100;
-            String newKeyword = removeSpecialLetters(keyword);
-            String mappedWord = charMapper(newKeyword);
+            String mappedWord = charMapper(keyword);
+            System.out.println(mappedWord);
+            String newKeyword = removeSpecialLetters(mappedWord);
             do{
                 currentPage++;
-                URL url = new URL(baseUrl+"?currentPage="+currentPage+"&countPerPage="+countPerPage+"&keyword="+mappedWord+"&confmKey="+confmkey);
+                URL url = new URL(baseUrl+"?currentPage="+currentPage+"&countPerPage="+countPerPage+"&keyword="+newKeyword+"&confmKey="+confmkey);
                 InputStream stream = url.openStream();
                 DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -121,7 +122,7 @@ public class SearchAddr {
         return newWord;
     }
     private static String removeSpecialLetters(String str) {
-        String newString = str.replaceAll("[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9,. ]", "");
+        String newString = str.replaceAll("[&, =]", "");
         return newString;
     }
     /* addressList[currRow][0]=getTagValue("admCd", eElement); // 행정구역코드
