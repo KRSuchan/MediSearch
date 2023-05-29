@@ -185,7 +185,7 @@ public class MainSceneController {
             item.setOnAction(event -> onAdvMediSelectAction(item));
         }
     }
-
+//ss
     @FXML
     protected void onAddressSearchAction(ActionEvent event) {
         String selected = ((Node)event.getSource()).getId();
