@@ -48,6 +48,12 @@ public class MainSceneController {
     @FXML
     private ToggleGroup Visit;
 
+    @FXML
+    private TextField SimpleAddInput;
+
+    @FXML
+    private TextField AdvAddInput;
+
     private boolean isSimpleMediMode = true; // variable to keep track of current mode
     private boolean isAdvMediMode = true;
 
@@ -181,9 +187,24 @@ public class MainSceneController {
     }
 
     @FXML
-    private void onAdvResultSpinAction() {
-        int value = AdvResultSpin.getValue();
-        System.out.println("AdvResultSpin value changed to: " + value);
+    protected void onAddressSearchAction(ActionEvent event) {
+        String selected = ((Node)event.getSource()).getId();
+        System.out.println(selected);
+        TextField currentTextField = (selected.equals("AdvAddSearchBtn") ? AdvAddInput : SimpleAddInput);
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddressScene.fxml"));
+            Parent root = fxmlLoader.load();
+            AddressSceneController controller = fxmlLoader.getController();
+            Scene scene = new Scene(root, 600, 400);
+            Stage stage = new Stage();
+            stage.setTitle("Address");
+            stage.setScene(scene);
+            controller.initialize(currentTextField.getText());
+            stage.showAndWait();
+            currentTextField.setText(controller.getResultAddress().replace("도로명 : ", ""));
+        } catch (IOException e) {
+            System.out.println(e);
+        }
     }
 
     @FXML
