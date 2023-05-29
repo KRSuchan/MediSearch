@@ -78,7 +78,7 @@ public class MainSceneController {
         for (MenuItem item : SimpleMediSelect.getItems()) {
             item.setOnAction(event -> onSimpleMediSelectAction(item));
         }
-
+//weare
         // Set event listener for menuItems of SimpleDaySelect
         for (MenuItem item : SimpleDaySelect.getItems()) {
             item.setOnAction(event -> onSimpleDaySelectAction(item));
