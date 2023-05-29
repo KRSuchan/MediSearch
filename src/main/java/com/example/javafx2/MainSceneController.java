@@ -114,11 +114,6 @@ public class MainSceneController {
                 AdvDaySelect.setDisable(true); // Disable AdvDaySelect
             }
         });
-
-        Tooltip tooltip = new Tooltip("기본 검색 결과는 직선 1Km 입니다.");
-        tooltip.setShowDelay(Duration.ZERO);
-        SimpleSearchBtn.setTooltip(tooltip);
-        AdvSearchBtn.setTooltip(tooltip);
     }
 
     private void onSimpleMediSelectAction(MenuItem item) {
