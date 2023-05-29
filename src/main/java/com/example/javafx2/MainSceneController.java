@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,6 +55,12 @@ public class MainSceneController {
     @FXML
     private TextField AdvAddInput;
 
+    @FXML
+    private Button SimpleSearchBtn;
+
+    @FXML
+    private Button AdvSearchBtn;
+
     private boolean isSimpleMediMode = true; // variable to keep track of current mode
     private boolean isAdvMediMode = true;
 
@@ -78,7 +85,7 @@ public class MainSceneController {
         for (MenuItem item : SimpleMediSelect.getItems()) {
             item.setOnAction(event -> onSimpleMediSelectAction(item));
         }
-//weare
+
         // Set event listener for menuItems of SimpleDaySelect
         for (MenuItem item : SimpleDaySelect.getItems()) {
             item.setOnAction(event -> onSimpleDaySelectAction(item));
@@ -107,6 +114,11 @@ public class MainSceneController {
                 AdvDaySelect.setDisable(true); // Disable AdvDaySelect
             }
         });
+
+        Tooltip tooltip = new Tooltip("기본 검색 결과는 직선 1Km 입니다.");
+        tooltip.setShowDelay(Duration.ZERO);
+        SimpleSearchBtn.setTooltip(tooltip);
+        AdvSearchBtn.setTooltip(tooltip);
     }
 
     private void onSimpleMediSelectAction(MenuItem item) {

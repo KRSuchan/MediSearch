@@ -50,6 +50,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
 
 <VBox prefHeight="600.0" prefWidth="639.0" stylesheets="@MainScene.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx2.MainSceneController">
   <children>
@@ -126,11 +127,11 @@
                               <Button fx:id="AdvAddSearchBtn" layoutX="332.0" layoutY="2.0" mnemonicParsing="false" onAction="#onAddressSearchAction" text="주소 검색" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="3.0" layoutY="77.0" minHeight="0.0" minWidth="0.0" prefHeight="49.0" prefWidth="633.0">
+                        <AnchorPane layoutX="3.0" layoutY="64.0" minHeight="86.0" minWidth="0.0" prefHeight="86.0" prefWidth="633.0">
                            <children>
-                              <ToggleButton fx:id="AdvMediToggle" layoutX="314.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAdvMediToggleBtnClick" prefHeight="14.0" prefWidth="15.0" text="⇆" />
-                              <Label fx:id="AdvMediLabel" layoutX="7.0" layoutY="18.0" text="진료 과목 설정 " />
-                              <MenuButton fx:id="AdvMediSelect" layoutX="98.0" layoutY="13.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="199.0" text="진료 과목을 선택하시오.">
+                              <ToggleButton fx:id="AdvMediToggle" layoutX="317.0" layoutY="34.0" mnemonicParsing="false" onAction="#onAdvMediToggleBtnClick" prefHeight="14.0" prefWidth="15.0" text="⇆" />
+                              <Label fx:id="AdvMediLabel" layoutX="10.0" layoutY="38.0" text="진료 과목 설정 " />
+                              <MenuButton fx:id="AdvMediSelect" layoutX="101.0" layoutY="33.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="199.0" text="진료 과목을 선택하시오.">
                                  <items>
                                     <MenuItem mnemonicParsing="false" text="Action 1" />
                                     <MenuItem mnemonicParsing="false" text="Action 2" />
@@ -138,50 +139,61 @@
                               </MenuButton>
                            </children>
                         </AnchorPane>
-                        <Button fx:id="AdvSearchBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="290.0" layoutY="472.0" mnemonicParsing="false" onAction="#onAdvSearchBtnClick" prefHeight="0.0" prefWidth="59.0" text="검색" />
-                        <AnchorPane layoutX="3.0" layoutY="382.0" minHeight="59.0" minWidth="0.0" prefHeight="59.0" prefWidth="633.0">
-                           <children>
-                              <AnchorPane layoutY="-25.0" minHeight="58.0" prefHeight="42.0" prefWidth="633.0">
-                                 <children>
-                                    <Label layoutX="14.0" layoutY="22.0" text="직선 거리 범위 설정" />
-                                    <Spinner fx:id="AdvResultSpin" layoutX="133.0" layoutY="15.0" prefHeight="34.0" prefWidth="95.0" />
-                                    <Label layoutX="240.0" layoutY="25.0" text="KM 이내" />
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="3.0" layoutY="233.0" minHeight="84.0" prefHeight="84.0" prefWidth="633.0">
-                           <children>
-                              <Label layoutX="14.0" layoutY="13.0" text="방문 시간 설정" />
-                              <MenuButton fx:id="AdvDaySelect" disable="true" layoutX="251.0" layoutY="46.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="199.0" text="방문 요일을 선택하시오.">
+                        <TitledPane animated="false" layoutX="41.0" layoutY="158.0" prefHeight="313.0" prefWidth="558.0" text="추가 검색 옵션">
+                           <content>
+                              <SplitPane dividerPositions="0.1623488773747841, 0.43436960276338515, 0.6701208981001726" orientation="VERTICAL" prefHeight="403.0" prefWidth="635.0">
                                  <items>
-                                    <MenuItem mnemonicParsing="false" text="월요일" />
-                                    <MenuItem mnemonicParsing="false" text="화요일" />
-                                    <MenuItem mnemonicParsing="false" text="수요일" />
-                                    <MenuItem mnemonicParsing="false" text="목요일" />
-                                    <MenuItem mnemonicParsing="false" text="금요일" />
-                                    <MenuItem mnemonicParsing="false" text="토요일" />
+                                    <AnchorPane minHeight="59.0" minWidth="0.0" prefHeight="59.0" prefWidth="633.0">
+                                       <children>
+                                          <Label layoutX="14.0" layoutY="21.0" text="병원명 검색어" />
+                                          <TextField fx:id="AdvNameInput" layoutX="110.0" layoutY="15.0" prefHeight="0.0" prefWidth="242.0">
+                                          </TextField>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane minHeight="84.0" prefHeight="84.0" prefWidth="633.0">
+                                       <children>
+                                          <Label layoutX="14.0" layoutY="13.0" text="방문 시간 설정" />
+                                          <MenuButton fx:id="AdvDaySelect" disable="true" layoutX="251.0" layoutY="46.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="199.0" text="방문 요일을 선택하시오.">
+                                             <items>
+                                                <MenuItem mnemonicParsing="false" text="월요일" />
+                                                <MenuItem mnemonicParsing="false" text="화요일" />
+                                                <MenuItem mnemonicParsing="false" text="수요일" />
+                                                <MenuItem mnemonicParsing="false" text="목요일" />
+                                                <MenuItem mnemonicParsing="false" text="금요일" />
+                                                <MenuItem mnemonicParsing="false" text="토요일" />
+                                             </items>
+                                          </MenuButton>
+                                          <RadioButton fx:id="AdvNowRadioBtn" layoutX="121.0" layoutY="12.0" mnemonicParsing="false" text="현재 시간 기준">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="Visit" />
+                                             </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="AdvDayRadioBtn" layoutX="121.0" layoutY="50.0" mnemonicParsing="false" text="방문 요일 설정" toggleGroup="$Visit" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane minHeight="58.0" prefHeight="42.0" prefWidth="633.0">
+                                       <children>
+                                          <Label layoutX="14.0" layoutY="22.0" text="직선 거리 범위 설정" />
+                                          <Spinner fx:id="AdvResultSpin" layoutX="133.0" layoutY="15.0" prefHeight="34.0" prefWidth="95.0" />
+                                          <Label layoutX="240.0" layoutY="25.0" text="KM 이내" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane minHeight="58.0" prefHeight="90.0" prefWidth="633.0">
+                                       <children>
+                                          <Label layoutX="14.0" layoutY="24.0" text="병원 규모 선택" />
+                                          <MenuButton fx:id="AdvSizeSelect" layoutX="131.0" layoutY="20.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="199.0" text="병원 규모를 선택하시오.">
+                                             <items>
+                                                <MenuItem mnemonicParsing="false" text="대학병원" />
+                                                <MenuItem mnemonicParsing="false" text="종합병원" />
+                                             </items>
+                                          </MenuButton>
+                                       </children>
+                                    </AnchorPane>
                                  </items>
-                              </MenuButton>
-                              <RadioButton fx:id="AdvNowRadioBtn" layoutX="121.0" layoutY="12.0" mnemonicParsing="false" text="현재 시간 기준">
-                                 <toggleGroup>
-                                    <ToggleGroup fx:id="Visit" />
-                                 </toggleGroup>
-                              </RadioButton>
-                              <RadioButton fx:id="AdvDayRadioBtn" layoutX="121.0" layoutY="50.0" mnemonicParsing="false" text="방문 요일 설정" toggleGroup="$Visit11" />
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="3.0" layoutY="144.0" minHeight="58.0" prefHeight="62.0" prefWidth="633.0">
-                           <children>
-                              <Label layoutX="14.0" layoutY="24.0" text="병원 규모 선택" />
-                              <MenuButton fx:id="AdvSizeSelect" layoutX="108.0" layoutY="18.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="199.0" text="병원 규모를 선택하시오.">
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" text="대학병원" />
-                                    <MenuItem mnemonicParsing="false" text="종합병원" />
-                                 </items>
-                              </MenuButton>
-                           </children>
-                        </AnchorPane>
+                              </SplitPane>
+                           </content>
+                        </TitledPane>
+                        <Button fx:id="AdvSearchBtn" onAction="#onAdvSearchBtnClick" alignment="CENTER" contentDisplay="CENTER" layoutX="290.0" layoutY="498.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="59.0" text="검색" />
                      </children>
                   </AnchorPane>
                </content>
