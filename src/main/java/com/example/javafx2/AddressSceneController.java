@@ -23,6 +23,12 @@ public class AddressSceneController {
     public void initialize(String input){
         resultAddress = new String();
         SearchTextField.setText(input);
+        addItemInResultList("도로명 1", "지번 1");
+        addItemInResultList("도로명 2", "지번 2");
+        addItemInResultList("도로명 3", "지번 3");
+        addItemInResultList("도로명 4", "지번 4");
+        addItemInResultList("도로명 5", "지번 5");
+        addItemInResultList("도로명 6", "지번 6");
     }
 
     @FXML
@@ -33,6 +39,8 @@ public class AddressSceneController {
         addItemInResultList("도로명 2", "지번 2");
         addItemInResultList("도로명 3", "지번 3");
         addItemInResultList("도로명 4", "지번 4");
+        addItemInResultList("도로명 5", "지번 5");
+        addItemInResultList("도로명 6", "지번 6");
     }
 
     void addItemInResultList(String roadName, String lotName) {
