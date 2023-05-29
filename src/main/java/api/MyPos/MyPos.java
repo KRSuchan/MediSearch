@@ -32,7 +32,7 @@ import java.net.URL;
     *   transY      /   double      /   변환후 Y좌표
     * */
 
-//  리턴 값 : -1 (api 오류), 0 (정상), 1 (빈 데이터) a
+//  리턴 값 : -1 (api 오류), 0 (정상), 1 (빈 데이터) ab
 
 
 public class MyPos {
