@@ -46,7 +46,7 @@ public class MyPos {
     private double entX = 0.0;
     private double entY = 0.0;
 
-    public int findMyXY(String admCd, String rnMgtSn, String udrtYn, int buldMnnm, int buldSlno){
+    public int findMyXY(long admCd, long rnMgtSn, int udrtYn, int buldMnnm, int buldSlno){
         try {
             URL url = new URL(baseUrl+"?admCd="+admCd+"&rnMgtSn="+rnMgtSn+"&udrtYn="+udrtYn+"&buldMnnm="+buldMnnm+"&buldSlno="+buldSlno+"&confmKey="+confmKey);
             InputStream stream = url.openStream();
@@ -136,6 +136,7 @@ public class MyPos {
     public int getTotalCnt() {
         return Integer.parseInt(totalCnt);
     }
+
     public int getErrCode() {
         return Integer.parseInt(errCode);
     }

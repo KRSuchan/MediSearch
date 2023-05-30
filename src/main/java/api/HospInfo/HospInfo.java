@@ -17,7 +17,7 @@ public class HospInfo {
     private String errCode = "-1";
     private String errMsg = "null";
     private String[][] hospInfoList;
-    public int searchHosp(double xPos, double yPos, double radius){
+    public int searchHosp(double xPos, double yPos, int radius){
         try {
             int currentPage = 0;
             int countPerPage = 100;
@@ -173,23 +173,24 @@ public class HospInfo {
     hospInfoList[currRow][4]=getTagValue("distance", eElement);
     hospInfoList[currRow][5]=getTagValue("telno", eElement);
     hospInfoList[currRow][6]=getTagValue("hospUrl", eElement);  */
+    public String getYkiho(int numOfRow) {return hospInfoList[numOfRow][0];}
     public String getYadmNm(int numOfRow){
-        return hospInfoList[numOfRow][0];
+        return hospInfoList[numOfRow][1];
     }
     public String getClCdNm(int numOfRow){
-        return hospInfoList[numOfRow][0];
+        return hospInfoList[numOfRow][2];
     }
     public String getAddr(int numOfRow){
-        return hospInfoList[numOfRow][0];
+        return hospInfoList[numOfRow][3];
     }
     public double getDistance(int numOfRow){
-        return Double.parseDouble(hospInfoList[numOfRow][0]);
+        return Double.parseDouble(hospInfoList[numOfRow][4]);
     }
     public String getTelno(int numOfRow){
-        return hospInfoList[numOfRow][0];
+        return hospInfoList[numOfRow][5];
     }
     public String getHospUrl(int numOfRow){
-        return hospInfoList[numOfRow][0];
+        return hospInfoList[numOfRow][6];
     }
 
     private static String getTagValue(String tag, Element eElement) {
