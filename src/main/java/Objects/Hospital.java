@@ -1,11 +1,11 @@
 package Objects;
 
 public class Hospital {
-    String ykiho = "null";
-    String yadmNm = "null";
-    String clcdNm = "null";
-    String yAddress = "null";
-    Double distance = 0.0;
+    String ykiho = "null"; // 병원 id
+    String yadmNm = "null"; // 병원 이름
+    String clcdNm = "null"; // 병원 종류
+    String yAddress = "null"; // 병원 주소
+    Double distance = 0.0; // 거리
 
     public String getYadmNm() {
         return yadmNm;
@@ -23,7 +23,7 @@ public class Hospital {
         return clcdNm;
     }
 
-    public String getyAddress() {
+    public String getYAddress() {
         return yAddress;
     }
 

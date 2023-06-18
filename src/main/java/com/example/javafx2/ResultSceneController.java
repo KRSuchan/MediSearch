@@ -1,102 +1,69 @@
 package com.example.javafx2;
 
+import Objects.Hospital;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class ResultSceneController implements Initializable {
 
     @FXML
-
-    private TableView<ResultData> tableView;
-
+    private TableView tableView;
     @FXML
     private Label resultLabel;
     @FXML
-
-    private TableColumn<ResultData, String> nameCol;
-
+    private TableColumn nameCol;
     @FXML
-
-    private TableColumn<ResultData, String> addressCol;
+    private TableColumn addressCol;
     @FXML
-
-    private TableColumn<ResultData, String> phoneNumCol;
+    private TableColumn kindCol;
     @FXML
-    private TableColumn<ResultData, Void> buttonCol;
+    private TableColumn distanceCol;
 
-    ObservableList<ResultData> data = FXCollections.observableArrayList();
-    //new ResultData("성모병원","대천로103번길","010-420-132"),
-    //            new ResultData("부민병원2","대천로103번길2","010-420-2"),new ResultData("백병원3","대천로103번길3","010-420-2"
+    private ArrayList<String> ykihoArray;
+
+    ObservableList data = FXCollections.observableArrayList();
 
 
-    public void initData(List<ResultData> list){
-        data.addAll(list);
-        resultLabel.setText(data.size()+"개의 병원이 검색되었습니다.");
+    public void initData(Hospital[] hospitals) {
+        for (Hospital hospital : hospitals) {
+            ykihoArray.add(hospital.getYkiho());
+        }
+        data.addAll(hospitals);
+        resultLabel.setText(data.size() + "개의 병원이 검색되었습니다");
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources)
-    {
-
-        nameCol.setCellValueFactory(cellData -> cellData.getValue().getName());
-
-        addressCol.setCellValueFactory(cellData -> cellData.getValue().getAddress());
-
-        phoneNumCol.setCellValueFactory(cellData -> cellData.getValue().getPhoneNum());
-
-        buttonCol.setCellFactory(param -> new TableCell<>()
-        {
-            private final Button button = new Button("상세보기");
-            {
-                button.setOnAction(event -> {
-                    // 버튼 동작 구현
-                    ResultData resultData = getTableView().getItems().get(getIndex());
-                    System.out.println("Clicked on " + resultData.getName() + " " + resultData.getPhoneNum());
-                    //
-                    try{FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Detailed.fxml"));
-                        Parent root = fxmlLoader.load();
-                        DetailedSceneController controller = fxmlLoader.getController();
-                        controller.initData(resultData);
-
-                        Scene scene = new Scene(root, 576, 509);
-                        Stage stage = new Stage();
-                        stage.setTitle("Detailed");
-                        stage.setScene(scene);
-                        stage.show();}
-                    catch(IOException e){
-
-                    }
-
-
-                });
-            }
-           @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(button);
+    public void initialize(URL location, ResourceBundle resources) {
+        ykihoArray = new ArrayList<String>();
+        tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(event.getClickCount() > 1) {
+                    System.out.println(ykihoArray.get(tableView.getSelectionModel().getSelectedIndex()));
                 }
             }
-
-
         });
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("yadmNm"));
+        addressCol.setCellValueFactory(new PropertyValueFactory<>("yAddress"));
+        kindCol.setCellValueFactory(new PropertyValueFactory<>("clcdNm"));
+        distanceCol.setCellValueFactory(new PropertyValueFactory<>("distance"));
+
         tableView.setItems(data);
     }
-
-
-
 }

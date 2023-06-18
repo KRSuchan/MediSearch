@@ -7,7 +7,5 @@ public class DetailedSceneController {
 
     @FXML
     TextArea reusltInfo;
-    public void initData(ResultData resultData){
-        reusltInfo.setText(resultData.getName()+" "+resultData.getAddress());
-    }
+
 }

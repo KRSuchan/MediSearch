@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx2.ResultSceneController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx2.ResultSceneController">
    <children>
-      <Label fx:id="resultLabel" alignment="CENTER_RIGHT" prefHeight="9.0" prefWidth="600.0">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-      <TableView fx:id="tableView" prefHeight="256.0" prefWidth="600.0">
+      <Label fx:id="resultLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="55.0" prefWidth="600.0" />
+      <TableView fx:id="tableView" prefHeight="383.0" prefWidth="600.0">
         <columns>
-          <TableColumn fx:id="nameCol" prefWidth="75.0" text="병원이름" />
-          <TableColumn fx:id="addressCol" prefWidth="75.0" text="병원주소" />
-            <TableColumn fx:id="phoneNumCol" prefWidth="75.0" text="전화 번호" />
-            <TableColumn fx:id="buttonCol" prefWidth="75.0" text="상세보기" />
+          <TableColumn fx:id="nameCol" prefWidth="160.0" resizable="false" text="병원이름" />
+          <TableColumn fx:id="addressCol" prefWidth="265.0" resizable="false" text="병원주소" />
+            <TableColumn fx:id="kindCol" prefWidth="110.0" resizable="false" text="병원 종류" />
+            <TableColumn fx:id="distanceCol" prefWidth="65.0" resizable="false" text="거리" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

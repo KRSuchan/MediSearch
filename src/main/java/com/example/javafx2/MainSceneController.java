@@ -1,5 +1,6 @@
 package com.example.javafx2;
 
+import Objects.Hospital;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -165,20 +166,47 @@ public class MainSceneController {
 
     @FXML
     protected void onSearchBtnClick(ActionEvent event) {
-//        for (CheckBox checkBox : checkBoxList) {
-//            if (checkBox.isSelected()) {
-//                System.out.println(StoreData.convertToMediCode(checkBox.getText()));
-//            }
-//        }
-//        System.out.println(StoreData.convertToSizeCode(SizeSelect.getText()));
+        int mediCodeLen = 0;
+        String distance = String.valueOf((int)Math.round(Double.parseDouble(DistanceLabel.getText()) * 1000));
+        String mediCode = "";
+        String kindCode = StoreData.convertToSizeCode(SizeSelect.getText()) + "/=/";
+        for (CheckBox checkBox : checkBoxList) {
+            if (checkBox.isSelected()) {
+                mediCode += StoreData.convertToMediCode(checkBox.getText()) + "/=/";
+                mediCodeLen++;
+            }
+        }
+
+        String totalInfo;
+        if(kindCode.equals("")) {
+            if(mediCodeLen != 0)
+                totalInfo = "02/=/" + AddInput.getText() + "/=/" + mediCodeLen + "/=/" + mediCode + distance;
+            else
+                totalInfo = "05/=/" + AddInput.getText() + "/=/" + distance;
+        } else {
+            if (mediCodeLen != 0)
+                totalInfo = "03/=/" + AddInput.getText() + "/=/" + mediCodeLen + "/=/" + mediCode + kindCode + distance;
+            else
+                totalInfo = "04/=/" + AddInput.getText() + "/=/" + kindCode + distance;
+        }
+        Hospital tmp1 = new Hospital();
+        tmp1.setYkiho("yKiho1");
+        tmp1.setYadmNm("임시병원1");
+        tmp1.setClcdNm("대학병원");
+        tmp1.setYAddress("구미시");
+        Hospital tmp2 = new Hospital();
+        tmp2.setYkiho("yKiho2");
+        tmp2.setYadmNm("임시병원2");
+        tmp2.setClcdNm("대학병원");
+        tmp2.setYAddress("구미시");
+        tmp2.setDistance(10.0);
+        Hospital[] hospitals = {tmp1, tmp2};
+        System.out.println(totalInfo);
         try {
-            List<ResultData> resultList =new ArrayList<>();
-            resultList.add(new ResultData("성모병원","대천로103번길","010-420-132"));
-            resultList.add(new ResultData("성모원2","대천로1","010-4223"));
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ResultScene.fxml"));
             Parent root = fxmlLoader.load();
             ResultSceneController controller = fxmlLoader.getController();
-            controller.initData(resultList);
+            controller.initData(hospitals);
             Scene scene = new Scene(root, 576, 509);
             Stage stage = new Stage();
             stage.setTitle("Results");
