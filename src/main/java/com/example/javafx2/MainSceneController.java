@@ -3,201 +3,127 @@ package com.example.javafx2;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainSceneController {
+    @FXML
+    private TitledPane MediSelectPane;
 
     @FXML
-    private Label SimpleMediLabel;
+    private ScrollPane MediSelectScroll;
 
     @FXML
-    private MenuButton SimpleMediSelect;
+    private MenuButton SizeSelect;
 
     @FXML
-    private Label AdvMediLabel;
+    private TextField AddInput;
 
     @FXML
-    private MenuButton AdvMediSelect;
+    private Slider DistanceSlider;
 
     @FXML
-    private Spinner<Integer> AdvResultSpin;
+    private Label DistanceLabel;
 
     @FXML
-    private MenuButton SimpleDaySelect;
+    private Button SearchBtn;
 
-    @FXML
-    private MenuButton AdvDaySelect;
+    private String[][] subjectLists = {
+            {"외과", "정형외과", "신경외과", "심장혈관흉부외과", "성형외과", "마취통증의학과", "재활의학과"},
+            {"내과", "내과", "신경과", "병리과"},
+            {"치과", "치과", "구강악안면외과", "치과보철과", "치과교정과", "소아치과", "치주과", "치과보존과", "구강내과", "영상치의학과", "구강병리과", "예방치과", "통합치의학과"},
+            {"이비인후과", "이비인후과"},
+            {"비뇨의학과", "비뇨의학과"},
+            {"피부과", "피부과"},
+            {"안과", "안과"},
+            {"산부인과", "산부인과"},
+            {"소아청소년과", "소아청소년과"},
+            {"한의과", "한방내과", "한방부인과", "한방소아과", "한방신경정신과", "한방안·이비인후·피부과", "침구과", "한방재활의학과", "사상체질과", "한방응급"},
+            {"정신과", "정신건강의학과"},
+            {"가정의학과", "가정의학과"},
+            {"기타", "영상의학과", "방사선종양학과", "진단검사의학과", "결핵과", "핵의학과", "응급의학과", "직업환경의학과", "예방의학과"}
+    };
 
-    @FXML
-    private MenuButton AdvSizeSelect;
+    private String[] sizes = {
+            "상급종합병원", "종합병원", "병원", "요양병원", "정신병원", "의원", "치과병원",
+            "치과의원", "조산원", "보건소", "보건지소", "보건진료소", "모자보건센타", "보건의료원",
+            "약국", "한방종합병원", "한방병원", "한의원", "한약방"
+    };
 
-    @FXML
-    private RadioButton AdvDayRadioBtn;
-
-    @FXML
-    private RadioButton AdvNowRadioBtn;
-
-    @FXML
-    private ToggleGroup Visit;
-
-    @FXML
-    private TextField SimpleAddInput;
-
-    @FXML
-    private TextField AdvAddInput;
-
-    @FXML
-    private Button SimpleSearchBtn;
-
-    @FXML
-    private Button AdvSearchBtn;
-
-    private boolean isSimpleMediMode = true; // variable to keep track of current mode
-    private boolean isAdvMediMode = true;
+    private List<CheckBox> checkBoxList;
 
     public void initialize() {
-        SimpleMediSelect.getItems().setAll(
-                new MenuItem("소아과"),
-                new MenuItem("이비인후과"),
-                new MenuItem("치과")
-        );
+        Label label = new Label("진료 과목 선택");
+        MediSelectPane.setGraphic(label);
+        MediSelectPane.setExpanded(false);
+        int columnIdx = 0, rowIdx = 0;
+        checkBoxList = new ArrayList<>();
+        GridPane grid = new GridPane();
+        grid.setVgap(10);
+        grid.setHgap(10);
+        grid.setPadding(new Insets(5, 5, 5, 5));
+        for (String[] subjectList : subjectLists) {
+            grid.add(new Text("- " + subjectList[0] + " -"),columnIdx, rowIdx++);
+            for (int i = 1; i < subjectList.length; i++) {
+                CheckBox checkBox = new CheckBox(subjectList[i]);
 
-        AdvMediSelect.getItems().setAll(
-                new MenuItem("소아과"),
-                new MenuItem("이비인후과"),
-                new MenuItem("치과")
-        );
-
-        // Set initial values for the AdvResultSpin
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1);
-        AdvResultSpin.setValueFactory(valueFactory);
-
-        // Set event listener for menuItems of SimpleMediSelect
-        for (MenuItem item : SimpleMediSelect.getItems()) {
-            item.setOnAction(event -> onSimpleMediSelectAction(item));
-        }
-
-        // Set event listener for menuItems of SimpleDaySelect
-        for (MenuItem item : SimpleDaySelect.getItems()) {
-            item.setOnAction(event -> onSimpleDaySelectAction(item));
-        }
-
-        // Set event listener for menuItems of AdvMediSelect
-        for (MenuItem item : AdvMediSelect.getItems()) {
-            item.setOnAction(event -> onAdvMediSelectAction(item));
-        }
-
-        // Set event listener for menuItems of AdvDaySelect
-        for (MenuItem item : AdvDaySelect.getItems()) {
-            item.setOnAction(event -> onAdvDaySelectAction(item));
-        }
-
-        // Set event listener for menuItems of AdvSizeSelect
-        for (MenuItem item : AdvSizeSelect.getItems()) {
-            item.setOnAction(event -> onAdvSizeSelectAction(item));
-        }
-
-        // Set event listener for ToggleGroup "Visit"
-        Visit.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == AdvDayRadioBtn) {
-                AdvDaySelect.setDisable(false); // Enable AdvDaySelect
-            } else if (newValue == AdvNowRadioBtn) {
-                AdvDaySelect.setDisable(true); // Disable AdvDaySelect
+                checkBoxList.add(checkBox);
+                if(subjectList[i].length() > 8) {
+                    grid.add(checkBox, columnIdx++, rowIdx, 2 ,1);
+                    columnIdx++;
+                }
+                else {
+                    grid.add(checkBox, columnIdx++, rowIdx);
+                }
+                if(columnIdx > 3) {
+                    columnIdx = 0;
+                    rowIdx++;
+                }
             }
+            columnIdx = 0;
+            grid.add(new Text(""), columnIdx, ++rowIdx);
+            rowIdx++;
+        }
+        MediSelectScroll.setContent(grid);
+
+        AddInput.setText("현재 주소를 입력하시오");
+        AddInput.setPromptText("현재 주소를 입력하시오");
+
+        for (String size : sizes) {
+            MenuItem menuItem = new MenuItem(size);
+            menuItem.setOnAction(event -> onSizeSelectAction(menuItem));
+            SizeSelect.getItems().add(menuItem);
+        }
+
+        DistanceSlider.setMin(0);
+        DistanceSlider.setMax(10);
+        DistanceSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            DistanceLabel.setText(String.format("%.1f", newValue)); // 값을 원하는 형식으로 포맷팅하여 출력
         });
     }
 
-    private void onSimpleMediSelectAction(MenuItem item) {
-        SimpleMediSelect.setText(item.getText());
-    }
-
-    private void onSimpleDaySelectAction(MenuItem item) {
-        SimpleDaySelect.setText(item.getText());
-    }
-
-    private void onAdvMediSelectAction(MenuItem item) {
-        AdvMediSelect.setText(item.getText());
-    }
-
-    private void onAdvDaySelectAction(MenuItem item) {
-        AdvDaySelect.setText(item.getText());
-    }
-
-    private void onAdvSizeSelectAction(MenuItem item) {
-        AdvSizeSelect.setText(item.getText());
-    }
-
-    @FXML
-    void onSimpleMediToggleBtnClick() {
-        isSimpleMediMode = !isSimpleMediMode; // toggle the mode
-
-        if (isSimpleMediMode) {
-            SimpleMediLabel.setText("진료 과목 설정");
-            SimpleMediSelect.setText("진료 과목을 선택하시오.");
-            SimpleMediSelect.getItems().setAll(
-                    new MenuItem("소아과"),
-                    new MenuItem("이비인후과"),
-                    new MenuItem("치과")
-            );
-
-        } else {
-            SimpleMediLabel.setText("증상 설정");
-            SimpleMediSelect.setText("증상을 선택하시오.");
-            SimpleMediSelect.getItems().setAll(
-                    new MenuItem("두통"),
-                    new MenuItem("치통"),
-                    new MenuItem("복통")
-            );
-        }
-
-        // Set event listener for menuItems of SimpleMediSelect
-        for (MenuItem item : SimpleMediSelect.getItems()) {
-            item.setOnAction(event -> onSimpleMediSelectAction(item));
-        }
-    }
-
-    @FXML
-    void onAdvMediToggleBtnClick() {
-        isAdvMediMode = !isAdvMediMode; // toggle the mode
-
-        if (isAdvMediMode) {
-            AdvMediLabel.setText("진료 과목 설정");
-            AdvMediSelect.setText("진료 과목을 선택하시오.");
-            AdvMediSelect.getItems().setAll(
-                    new MenuItem("소아과"),
-                    new MenuItem("이비인후과"),
-                    new MenuItem("치과")
-            );
-        } else {
-            AdvMediLabel.setText("증상 설정");
-            AdvMediSelect.setText("증상을 선택하시오.");
-            AdvMediSelect.getItems().setAll(
-                    new MenuItem("두통"),
-                    new MenuItem("치통"),
-                    new MenuItem("복통")
-            );
-        }
-
-        // Set event listener for menuItems of AdvMediSelect
-        for (MenuItem item : AdvMediSelect.getItems()) {
-            item.setOnAction(event -> onAdvMediSelectAction(item));
-        }
+    private void onSizeSelectAction(MenuItem item) {
+        SizeSelect.setText(item.getText());
     }
 
     @FXML
     protected void onAddressSearchAction(ActionEvent event) {
         String selected = ((Node)event.getSource()).getId();
         System.out.println(selected);
-        TextField currentTextField = (selected.equals("AdvAddSearchBtn") ? AdvAddInput : SimpleAddInput);
+        TextField currentTextField = AddInput;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddressScene.fxml"));
             Parent root = fxmlLoader.load();
@@ -215,22 +141,14 @@ public class MainSceneController {
     }
 
     @FXML
-    protected void onSimpleSearchBtnClick(ActionEvent event) {
+    protected void onSearchBtnClick(ActionEvent event) {
+//        for (CheckBox checkBox : checkBoxList) {
+//            if (checkBox.isSelected()) {
+//                System.out.println(StoreData.convertToMediCode(checkBox.getText()));
+//            }
+//        }
+//        System.out.println(StoreData.convertToSizeCode(SizeSelect.getText()));
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource(""));
-            Scene scene = new Scene(fxmlLoader.load(), 576, 509);
-            Stage stage = new Stage();
-            stage.setTitle("Results");
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {}
-    }
-
-    @FXML
-    protected void onAdvSearchBtnClick(ActionEvent event) {
-        try {
-
             List<ResultData> resultList =new ArrayList<>();
             resultList.add(new ResultData("성모병원","대천로103번길","010-420-132"));
             resultList.add(new ResultData("성모원2","대천로1","010-4223"));
