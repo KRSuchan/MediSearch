@@ -1,5 +1,6 @@
 package com.example.javafx2;
 
+import Objects.Address;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -7,6 +8,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import network.NetworkVO;
+import network.ReadData;
+import network.SendData;
+
+import java.io.ObjectInputStream;
+import java.net.Socket;
 
 public class AddressSceneController {
     private String resultAddress;
@@ -20,27 +27,53 @@ public class AddressSceneController {
     @FXML
     private Button SearchBtn;
 
-    public void initialize(String input){
-        resultAddress = new String();
-        SearchTextField.setText(input);
-        addItemInResultList("도로명 1", "지번 1");
-        addItemInResultList("도로명 2", "지번 2");
-        addItemInResultList("도로명 3", "지번 3");
-        addItemInResultList("도로명 4", "지번 4");
-        addItemInResultList("도로명 5", "지번 5");
-        addItemInResultList("도로명 6", "지번 6");
+    Socket cliSocket = null;
+    private ObjectInputStream ois;
+    private int totalAddressCnt = 0;
+    public static final int SLEEPTIME= NetworkVO.SLEEPTIME;
+
+    public void initialize(String input, Socket cliSocket, ObjectInputStream ois) throws InterruptedException {
+        this.ois = ois;
+        this.cliSocket = cliSocket;
+        makeAddressBtns(input, cliSocket, ois);
+    }
+    private void makeAddressBtns(String input, Socket cliSocket, ObjectInputStream ois) throws InterruptedException{
+        if (!input.equals("") && !input.contains("/") && !input.contains("=")) {
+            try {
+                resultAddress = new String();
+                SearchTextField.setText(input);
+                SendData sd = new SendData(cliSocket);
+                input = "01/=/" + input;
+                sd.run(input);
+
+                ReadData rd = new ReadData(cliSocket, ois);
+                rd.start();
+                Thread.sleep(SLEEPTIME);
+                System.out.println("under the rd.start in AddressScene initialize");
+                Address[] addresses = (Address[]) rd.getData();
+                this.totalAddressCnt = addresses.length;
+//            System.out.println("주소 개수"+addrTotalCnt);
+                System.out.println(totalAddressCnt + " addresses Founded.");
+                for (int i = 0; i < totalAddressCnt; i++) {
+                    addItemInResultList(addresses[i].getRoadAddress(), addresses[i].getJibunAddress());
+                }
+            } catch (ClassCastException e) {
+                System.out.println("ClassCastException in initialize, AddressScene");
+                e.printStackTrace();
+            } catch (RuntimeException e) {
+                System.out.println("RuntimeException in initialize, AddressScene");
+                e.printStackTrace();
+            }
+        }else {
+            System.out.println("null");
+        }
     }
 
     @FXML
-    protected void onSearchBtnClick() {
+    protected void onSearchBtnClick() throws InterruptedException {
         String input = SearchTextField.getText();
         // function call by using input String and get Address info
-        addItemInResultList("도로명 1", "지번 1");
-        addItemInResultList("도로명 2", "지번 2");
-        addItemInResultList("도로명 3", "지번 3");
-        addItemInResultList("도로명 4", "지번 4");
-        addItemInResultList("도로명 5", "지번 5");
-        addItemInResultList("도로명 6", "지번 6");
+        makeAddressBtns(input, cliSocket, ois);
     }
 
     void addItemInResultList(String roadName, String lotName) {

@@ -15,7 +15,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import network.NetworkVO;
+
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,55 +70,70 @@ public class MainSceneController {
     };
 
     private List<CheckBox> checkBoxList;
+    public static final String HOST = NetworkVO.HOST;
+    public static final int PORT = NetworkVO.PORT;
+    private Socket cliSocket = null;
+    private ObjectInputStream ois = null;
 
     public void initialize() {
-        Label label = new Label("진료 과목 선택");
-        MediSelectPane.setGraphic(label);
-        MediSelectPane.setExpanded(false);
-        int columnIdx = 0, rowIdx = 0;
-        checkBoxList = new ArrayList<>();
-        GridPane grid = new GridPane();
-        grid.setVgap(10);
-        grid.setHgap(10);
-        grid.setPadding(new Insets(5, 5, 5, 5));
-        for (String[] subjectList : subjectLists) {
-            grid.add(new Text("- " + subjectList[0] + " -"),columnIdx, rowIdx++);
-            for (int i = 1; i < subjectList.length; i++) {
-                CheckBox checkBox = new CheckBox(subjectList[i]);
-
-                checkBoxList.add(checkBox);
-                if(subjectList[i].length() > 8) {
-                    grid.add(checkBox, columnIdx++, rowIdx, 2 ,1);
-                    columnIdx++;
-                }
-                else {
-                    grid.add(checkBox, columnIdx++, rowIdx);
-                }
-                if(columnIdx > 3) {
-                    columnIdx = 0;
-                    rowIdx++;
-                }
+        try {
+            cliSocket = new Socket(HOST, PORT);
+            System.out.println("Connection successful");
+            System.out.println("ois is null ? in MainScene initialize() : " + ois);
+            if (ois == null) {
+                InputStream is = cliSocket.getInputStream();
+                ois = new ObjectInputStream(is);
             }
-            columnIdx = 0;
-            grid.add(new Text(""), columnIdx, ++rowIdx);
-            rowIdx++;
+            Label label = new Label("진료 과목 선택");
+            MediSelectPane.setGraphic(label);
+            MediSelectPane.setExpanded(false);
+            int columnIdx = 0, rowIdx = 0;
+            checkBoxList = new ArrayList<>();
+            GridPane grid = new GridPane();
+            grid.setVgap(10);
+            grid.setHgap(10);
+            grid.setPadding(new Insets(5, 5, 5, 5));
+            for (String[] subjectList : subjectLists) {
+                grid.add(new Text("- " + subjectList[0] + " -"), columnIdx, rowIdx++);
+                for (int i = 1; i < subjectList.length; i++) {
+                    CheckBox checkBox = new CheckBox(subjectList[i]);
+
+                    checkBoxList.add(checkBox);
+                    if (subjectList[i].length() > 8) {
+                        grid.add(checkBox, columnIdx++, rowIdx, 2, 1);
+                        columnIdx++;
+                    } else {
+                        grid.add(checkBox, columnIdx++, rowIdx);
+                    }
+                    if (columnIdx > 3) {
+                        columnIdx = 0;
+                        rowIdx++;
+                    }
+                }
+                columnIdx = 0;
+                grid.add(new Text(""), columnIdx, ++rowIdx);
+                rowIdx++;
+            }
+            MediSelectScroll.setContent(grid);
+
+            AddInput.setText("현재 주소를 입력하시오");
+            AddInput.setPromptText("현재 주소를 입력하시오");
+
+            for (String size : sizes) {
+                MenuItem menuItem = new MenuItem(size);
+                menuItem.setOnAction(event -> onSizeSelectAction(menuItem));
+                SizeSelect.getItems().add(menuItem);
+            }
+
+            DistanceSlider.setMin(0);
+            DistanceSlider.setMax(10);
+            DistanceSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+                DistanceLabel.setText(String.format("%.1f", newValue)); // 값을 원하는 형식으로 포맷팅하여 출력
+            });
+        }catch (IOException e){
+            System.out.println("IOException in initialize(), MainSceneController");
+            System.err.println(e);
         }
-        MediSelectScroll.setContent(grid);
-
-        AddInput.setText("현재 주소를 입력하시오");
-        AddInput.setPromptText("현재 주소를 입력하시오");
-
-        for (String size : sizes) {
-            MenuItem menuItem = new MenuItem(size);
-            menuItem.setOnAction(event -> onSizeSelectAction(menuItem));
-            SizeSelect.getItems().add(menuItem);
-        }
-
-        DistanceSlider.setMin(0);
-        DistanceSlider.setMax(10);
-        DistanceSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            DistanceLabel.setText(String.format("%.1f", newValue)); // 값을 원하는 형식으로 포맷팅하여 출력
-        });
     }
 
     private void onSizeSelectAction(MenuItem item) {
@@ -132,11 +153,13 @@ public class MainSceneController {
             Stage stage = new Stage();
             stage.setTitle("Address");
             stage.setScene(scene);
-            controller.initialize(currentTextField.getText());
+            controller.initialize(currentTextField.getText(), cliSocket, ois);
             stage.showAndWait();
             currentTextField.setText(controller.getResultAddress().replace("도로명 : ", ""));
         } catch (IOException e) {
             System.out.println(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
