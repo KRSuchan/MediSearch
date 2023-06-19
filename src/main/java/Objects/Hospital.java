@@ -27,6 +27,10 @@ public class Hospital {
         return yAddress;
     }
 
+    public String getDistanceStr() {
+        return String.format("%.1f", distance) + " km";
+    }
+
     public void setClcdNm(String clcdNm) {
         this.clcdNm = clcdNm;
     }

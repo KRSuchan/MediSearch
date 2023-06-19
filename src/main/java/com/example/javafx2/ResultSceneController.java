@@ -62,7 +62,7 @@ public class ResultSceneController implements Initializable {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("yadmNm"));
         addressCol.setCellValueFactory(new PropertyValueFactory<>("yAddress"));
         kindCol.setCellValueFactory(new PropertyValueFactory<>("clcdNm"));
-        distanceCol.setCellValueFactory(new PropertyValueFactory<>("distance"));
+        distanceCol.setCellValueFactory(new PropertyValueFactory<>("distanceStr"));
 
         tableView.setItems(data);
     }

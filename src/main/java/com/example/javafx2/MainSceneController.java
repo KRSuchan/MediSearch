@@ -45,8 +45,6 @@ public class MainSceneController {
     @FXML
     private Label DistanceLabel;
 
-    @FXML
-    private Button SearchBtn;
 
     private String[][] subjectLists = {
             {"외과", "정형외과", "신경외과", "심장혈관흉부외과", "성형외과", "마취통증의학과", "재활의학과"},
@@ -69,6 +67,8 @@ public class MainSceneController {
             "치과의원", "조산원", "보건소", "보건지소", "보건진료소", "모자보건센타", "보건의료원",
             "약국", "한방종합병원", "한방병원", "한의원", "한약방"
     };
+
+    private String searchedAddress;
 
     private List<CheckBox> checkBoxList;
     public static final String HOST = NetworkVO.HOST;
@@ -119,6 +119,7 @@ public class MainSceneController {
 
             AddInput.setText("현재 주소를 입력하시오");
             AddInput.setPromptText("현재 주소를 입력하시오");
+            searchedAddress = "";
 
             for (String size : sizes) {
                 MenuItem menuItem = new MenuItem(size);
@@ -156,7 +157,8 @@ public class MainSceneController {
             stage.setScene(scene);
             controller.initialize(currentTextField.getText(), cliSocket, ois);
             stage.showAndWait();
-            currentTextField.setText(controller.getResultAddress().replace("도로명 : ", ""));
+            searchedAddress = controller.getResultAddress().replace("도로명 : ", "");
+            currentTextField.setText(searchedAddress);
         } catch (IOException e) {
             System.out.println(e);
         } catch (InterruptedException e) {
@@ -189,6 +191,7 @@ public class MainSceneController {
             else
                 totalInfo = "04/=/" + AddInput.getText() + "/=/" + kindCode + distance;
         }
+
         Hospital tmp1 = new Hospital();
         tmp1.setYkiho("yKiho1");
         tmp1.setYadmNm("임시병원1");
@@ -199,9 +202,18 @@ public class MainSceneController {
         tmp2.setYadmNm("임시병원2");
         tmp2.setClcdNm("대학병원");
         tmp2.setYAddress("구미시");
-        tmp2.setDistance(10.0);
+        tmp2.setDistance(9.154832);
         Hospital[] hospitals = {tmp1, tmp2};
         System.out.println(totalInfo);
+
+        if(!AddInput.getText().equals(searchedAddress)) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("검색 오류");
+            alert.setHeaderText("현재 주소 항목 변경 감지");
+            alert.setContentText("현재 주소를 검색한 후 변경하지 마십시오");
+            alert.showAndWait();
+            return;
+        }
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ResultScene.fxml"));
             Parent root = fxmlLoader.load();
@@ -214,6 +226,4 @@ public class MainSceneController {
             stage.show();
         } catch (IOException e) {}
     }
-
-
 }

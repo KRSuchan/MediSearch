@@ -45,7 +45,6 @@ public class AddressSceneController {
                 SendData sd = new SendData(cliSocket);
                 input = "01/=/" + input;
                 sd.run(input);
-
                 ReadData rd = new ReadData(cliSocket, ois);
                 rd.start();
                 Thread.sleep(SLEEPTIME);
@@ -54,6 +53,7 @@ public class AddressSceneController {
                 this.totalAddressCnt = addresses.length;
 //            System.out.println("주소 개수"+addrTotalCnt);
                 System.out.println(totalAddressCnt + " addresses Founded.");
+                ResultList.getChildren().clear();
                 for (int i = 0; i < totalAddressCnt; i++) {
                     addItemInResultList(addresses[i].getRoadAddress(), addresses[i].getJibunAddress());
                 }
@@ -71,6 +71,7 @@ public class AddressSceneController {
 
     @FXML
     protected void onSearchBtnClick() throws InterruptedException {
+
         String input = SearchTextField.getText();
         // function call by using input String and get Address info
         makeAddressBtns(input, cliSocket, ois);
