@@ -50,6 +50,6 @@ public class Hospital implements Serializable {
     }
 
     public String getDistanceStr() {
-        return String.format("%.1f", distance) + " km";
+        return String.format("%.1f", distance / 1000) + " km";
     }
 }

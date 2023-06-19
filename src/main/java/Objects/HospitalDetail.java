@@ -3,12 +3,12 @@ package Objects;
 import java.io.Serializable;
 
 public class HospitalDetail implements Serializable {
-    private String yadmNm= "null";
-    private String clcdNm = "null";
-    private String yAddress = "null";
-    private String[] depts = {"null"};
-    private String hospUrl = "null";
-    private String telNo = "null";
+    private String yadmNm= "null"; // 병원 이름
+    private String clcdNm = "null"; // 병원 종류
+    private String yAddress = "null"; // 병원 주소
+    private String[] depts = {"null"}; // 진료 과목들
+    private String hospUrl = "null"; // 병원 홈페이지
+    private String telNo = "null"; // 병원 전화번호
 
     private String trmtMonStart = "null";
     private String trmtMonEnd = "null";
@@ -22,8 +22,12 @@ public class HospitalDetail implements Serializable {
     private String trmtFriEnd = "null";
     private String trmtSatStart = "null";
     private String trmtSatEnd = "null";
+    private String trmtSunStart = "null";
+    private String trmtSunEnd = "null";
     private String lunchSat = "null";
     private String lunchWeek = "null";
+    private String noTrmtHoli = "null";
+    private String noTrmtSun = "null";
 
     public String getClcdNm() {
         return clcdNm;
@@ -72,6 +76,10 @@ public class HospitalDetail implements Serializable {
     public String getTrmtSatEnd() {
         return trmtSatEnd;
     }
+
+    public String getTrmtSunStart() { return trmtSunStart; }
+
+    public String getTrmtSunEnd() { return trmtSunEnd; }
 
     public String getTrmtMonStart() {
         return trmtMonStart;
@@ -181,5 +189,25 @@ public class HospitalDetail implements Serializable {
 
     public void setTelNo(String telNo) {
         this.telNo = telNo;
+    }
+
+    public void setTrmtSunStart(String trmtSunStart) { this.trmtSunStart = trmtSunStart; }
+
+    public void setTrmtSunEnd(String trmtSunEnd) { this.trmtSunEnd = trmtSunEnd; }
+
+    public String getNoTrmtHoli() {
+        return noTrmtHoli;
+    }
+
+    public void setNoTrmtHoli(String noTrmtHoli) {
+        this.noTrmtHoli = noTrmtHoli;
+    }
+
+    public String getNoTrmtSun() {
+        return noTrmtSun;
+    }
+
+    public void setNoTrmtSun(String noTrmtSun) {
+        this.noTrmtSun = noTrmtSun;
     }
 }

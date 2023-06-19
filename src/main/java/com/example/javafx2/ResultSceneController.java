@@ -1,6 +1,7 @@
 package com.example.javafx2;
 
 import Objects.Hospital;
+import Objects.HospitalDetail;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -55,7 +56,10 @@ public class ResultSceneController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 if(event.getClickCount() > 1) {
-                    System.out.println(ykihoArray.get(tableView.getSelectionModel().getSelectedIndex()));
+                    String totalInfo = "06/=/" + ykihoArray.get(tableView.getSelectionModel().getSelectedIndex());
+                    System.out.println(totalInfo);
+                    HospitalDetail detail = new HospitalDetail();
+                    onTableItemDoubleClick(detail);
                 }
             }
         });
@@ -65,5 +69,21 @@ public class ResultSceneController implements Initializable {
         distanceCol.setCellValueFactory(new PropertyValueFactory<>("distanceStr"));
 
         tableView.setItems(data);
+    }
+
+    void onTableItemDoubleClick(HospitalDetail detail) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DetailScene.fxml"));
+            Parent root = fxmlLoader.load();
+            DetailSceneController controller = fxmlLoader.getController();
+            controller.initData(detail);
+            Scene scene = new Scene(root, 576, 509);
+            Stage stage = new Stage();
+            stage.setTitle("Details");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
     }
 }
