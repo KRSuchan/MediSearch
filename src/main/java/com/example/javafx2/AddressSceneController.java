@@ -25,6 +25,9 @@ public class AddressSceneController {
     private TextFlow ResultList;
 
     @FXML
+    private Label SearchCount;
+
+    @FXML
     private Button SearchBtn;
 
     Socket cliSocket = null;
@@ -54,6 +57,7 @@ public class AddressSceneController {
 //            System.out.println("주소 개수"+addrTotalCnt);
                 System.out.println(totalAddressCnt + " addresses Founded.");
                 ResultList.getChildren().clear();
+                SearchCount.setText(totalAddressCnt + "개의 주소가 검색되었습니다");
                 for (int i = 0; i < totalAddressCnt; i++) {
                     addItemInResultList(addresses[i].getRoadAddress(), addresses[i].getJibunAddress());
                 }

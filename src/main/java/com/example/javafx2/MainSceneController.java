@@ -68,7 +68,9 @@ public class MainSceneController {
             "약국", "한방종합병원", "한방병원", "한의원", "한약방"
     };
 
-    private String searchedAddress;
+    private String searchedAddress = "";
+    private boolean isSearched = false;
+    private boolean isCancel = false;
 
     private List<CheckBox> checkBoxList;
     public static final String HOST = NetworkVO.HOST;
@@ -147,6 +149,7 @@ public class MainSceneController {
         String selected = ((Node)event.getSource()).getId();
         System.out.println(selected);
         TextField currentTextField = AddInput;
+        isCancel = false;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddressScene.fxml"));
             Parent root = fxmlLoader.load();
@@ -155,10 +158,19 @@ public class MainSceneController {
             Stage stage = new Stage();
             stage.setTitle("Address");
             stage.setScene(scene);
+            stage.setOnCloseRequest(event1 -> {
+                isCancel = true;
+            });
             controller.initialize(currentTextField.getText(), cliSocket, ois);
             stage.showAndWait();
+            if(isCancel) {
+                currentTextField.setText(searchedAddress);
+                return;
+            }
             searchedAddress = controller.getResultAddress().replace("도로명 : ", "");
             currentTextField.setText(searchedAddress);
+            if(!searchedAddress.equals(""))
+                isSearched = true;
         } catch (IOException e) {
             System.out.println(e);
         } catch (InterruptedException e) {
@@ -180,7 +192,7 @@ public class MainSceneController {
         }
 
         String totalInfo;
-        if(kindCode.equals("")) {
+        if(kindCode.equals("/=/")) {
             if(mediCodeLen != 0)
                 totalInfo = "02/=/" + AddInput.getText() + "/=/" + mediCodeLen + "/=/" + mediCode + distance;
             else
@@ -206,7 +218,21 @@ public class MainSceneController {
         Hospital[] hospitals = {tmp1, tmp2};
         System.out.println(totalInfo);
 
-        if(!AddInput.getText().equals(searchedAddress)) {
+        if(!isSearched) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("검색 오류");
+            alert.setHeaderText("주소 검색 미시행");
+            alert.setContentText("주소를 검색하십시오");
+            alert.showAndWait();
+            return;
+        } else if(AddInput.getText().equals("")) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("검색 오류");
+            alert.setHeaderText("주소 미입력");
+            alert.setContentText("주소를 입력하십시오");
+            alert.showAndWait();
+            return;
+        } else if(!AddInput.getText().equals(searchedAddress)) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("검색 오류");
             alert.setHeaderText("현재 주소 항목 변경 감지");
