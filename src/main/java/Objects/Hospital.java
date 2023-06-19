@@ -46,4 +46,8 @@ public class Hospital {
     public void setYkiho(String ykiho) {
         this.ykiho = ykiho;
     }
+
+    public String getDistanceStr() {
+        return String.format("%.1f", distance) + " km";
+    }
 }
