@@ -87,6 +87,26 @@ public class ResultSceneController implements Initializable {
         kindCol.setCellValueFactory(new PropertyValueFactory<>("clcdNm"));
         distanceCol.setCellValueFactory(new PropertyValueFactory<>("distanceStr"));
 
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%555
+        // 실행 안될 시 제거할 부분
+        nameCol.setCellFactory(column -> {
+            return new TableCell<Hospital, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setAlignment(Pos.CENTER);
+                    } else {
+                        setText(item);
+                        setAlignment(Pos.CENTER);
+                    }
+                }
+            };
+        });
+
         addressCol.setCellFactory(column -> {
             return new TableCell<Hospital, String>() {
                 @Override
@@ -134,6 +154,10 @@ public class ResultSceneController implements Initializable {
                 }
             };
         });
+        // 이 주석 사이에 있는 코드 전부 삭제
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         tableView.setItems(data);
     }
