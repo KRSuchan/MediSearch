@@ -1,6 +1,8 @@
 package Objects;
 
-public class HospitalDetail {
+import java.io.Serializable;
+
+public class HospitalDetail implements Serializable {
     private String yadmNm= "null";
     private String clcdNm = "null";
     private String yAddress = "null";

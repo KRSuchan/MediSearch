@@ -87,6 +87,7 @@ public class MainSceneController {
             cliSocket = new Socket(HOST, PORT);
             System.out.println("Connection successful");
             System.out.println("ois is null ? in MainScene initialize() : " + ois);
+
             if (ois == null) {
                 InputStream is = cliSocket.getInputStream();
                 ois = new ObjectInputStream(is);
@@ -210,34 +211,6 @@ public class MainSceneController {
 
         System.out.println("Send Data in onSearchBtnClick, MainSceneController : "+totalInfo);
 
-        // TODO : 서버 전송 및 수신(+병원 객체 생성) 위치 (전송 STRING : totalInfo)
-//
-//        SendData sd = new SendData(cliSocket);
-//        sd.run(totalInfo);
-//
-//        ReadData rd = new ReadData(cliSocket, ois);
-//        rd.start();
-//        Thread.sleep(SLEEPTIME+3000);
-//        System.out.println("under the rd.start in MainSceneController onSearchBtnClick");
-//        Hospital[] hospitals = (Hospital[]) rd.getData();
-//        int totalHospitalsCnt = hospitals.length;
-//        System.out.println(totalHospitalsCnt + " hospitals are Founded.");
-        // 서버 전송 및 수신(+객체 생성) 종료
-
-        Hospital tmp1 = new Hospital();
-        tmp1.setYkiho("yKiho1");
-        tmp1.setYadmNm("임시병원1");
-        tmp1.setClcdNm("대학병원");
-        tmp1.setYAddress("구미시");
-        Hospital tmp2 = new Hospital();
-        tmp2.setYkiho("yKiho2");
-        tmp2.setYadmNm("임시병원2");
-        tmp2.setClcdNm("대학병원");
-        tmp2.setYAddress("구미시");
-        tmp2.setDistance(9.154832);
-        Hospital[] hospitals = {tmp1, tmp2};
-        System.out.println(totalInfo);
-
         if(!isSearched) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("검색 오류");
@@ -260,6 +233,18 @@ public class MainSceneController {
             alert.showAndWait();
             return;
         }
+        // 서버 전송 및 수신(+병원 객체 생성)
+        SendData sd = new SendData(cliSocket);
+        sd.run(totalInfo);
+
+        ReadData rd = new ReadData(cliSocket, ois);
+        rd.run();
+        System.out.println("under the rd.start in MainSceneController onSearchBtnClick");
+        Hospital[] hospitals = (Hospital[]) rd.getData();
+        int totalHospitalsCnt = hospitals.length;
+        System.out.println(totalHospitalsCnt + " hospitals are Founded.");
+        // 서버 전송 및 수신(+객체 생성) 종료
+
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ResultScene.fxml"));
             Parent root = fxmlLoader.load();
