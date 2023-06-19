@@ -3,6 +3,7 @@ package com.example.javafx2;
 import Objects.HospitalDetail;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -31,34 +32,38 @@ public class DetailSceneController implements Initializable {
     @FXML
     private Hyperlink HomepageLabel;
     @FXML
-    private AnchorPane SubjectPane;
+    private ScrollPane SubjectPane;
     @FXML
     private ScrollPane OperationPane;
     @FXML
     private Label SunTrmtLabel;
     @FXML
     private Label HolTrmtLabel;
-
-    private HospitalDetail detail;
     private final int URL_ROW = 4;
     private final int OPERATION_ROW = 5;
     private final int SUN_TRMT_ROW = 6;
     private final int HOL_TRMT_ROW = 7;
 
     public void initData(HospitalDetail detail) {
-        this.detail = detail;
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
         HospitalNameLabel.setText(detail.getYadmNm());
         AddressLabel.setText(detail.getYAddress());
         KindLabel.setText(detail.getClcdNm());
         TelLabel.setText(detail.getTelNo());
+
+        GridPane subjectGrid = new GridPane();
+        subjectGrid.setVgap(10);
+        subjectGrid.setHgap(10);
+        subjectGrid.setPadding(new Insets(5, 5, 5, 5));
+        int row = 0, col = 0;
         for (String dept : detail.getDepts()) {
             Label subjectLabel = new Label(dept);
-            SubjectPane.getChildren().add(subjectLabel);
+            subjectGrid.add(subjectLabel, col++, row);
+            if(col > 4) {
+                col = 0;
+                row++;
+            }
         }
+        SubjectPane.setContent(subjectGrid);
 
         if(detail.getNoTrmtHoli().equals("null"))
             DetailGridPane.getRowConstraints().remove(HOL_TRMT_ROW);
@@ -68,7 +73,11 @@ public class DetailSceneController implements Initializable {
             DetailGridPane.getRowConstraints().remove(SUN_TRMT_ROW);
         else SunTrmtLabel.setText(detail.getNoTrmtSun());
 
-        AnchorPane operationAnchor = new AnchorPane();
+        GridPane operationGrid = new GridPane();
+        operationGrid.setVgap(2);
+        operationGrid.setHgap(2);
+        operationGrid.setPadding(new Insets(5, 5, 5, 5));
+        row = 0; col = 0;
         String[] OperationTime = new String[7];
         Arrays.fill(OperationTime, "");
         if(!detail.getTrmtMonStart().equals("null")) {
@@ -101,25 +110,31 @@ public class DetailSceneController implements Initializable {
         }
         for (int i = 0; i < OperationTime.length; i++) {
             if (!OperationTime[i].isBlank()) {
-                operationAnchor.getChildren().add(new Label(OperationTime[i]));
+                operationGrid.add(new Label(OperationTime[i]), col, row++);
                 if(!detail.getLunchWeek().equals("null") && (i < 5))
-                    operationAnchor.getChildren().add(new Label(detail.getLunchWeek() + " 점심시간"));
+                    operationGrid.add(new Label("\t" + detail.getLunchWeek() + " 점심시간"), col, row++);
                 else if(!detail.getLunchSat().equals("null") && (i == 5))
-                    operationAnchor.getChildren().add(new Label(detail.getLunchSat() + " 점심시간"));
+                    operationGrid.add(new Label("\t" + detail.getLunchSat() + " 점심시간"), col, row++);
             }
         }
-        if(operationAnchor.getChildren().isEmpty())
-            DetailGridPane.getRowConstraints().remove(OPERATION_ROW);
-        else OperationPane.setContent(operationAnchor);
+        if(operationGrid.getChildren().isEmpty()) {
+            DetailGridPane.getChildren().removeIf(node -> GridPane.getRowIndex(node) == OPERATION_ROW);
+            System.out.println("operationGrid is empty");
+        }
+        else OperationPane.setContent(operationGrid);
 
-        if(detail.getHospUrl().equals("null"))
+        if(detail.getHospUrl().equals("null")) {
             DetailGridPane.getRowConstraints().remove(URL_ROW);
+            System.out.println("urlN: " + detail.getHospUrl());
+        }
         else {
             HomepageLabel.setText(detail.getHospUrl());
+            System.out.println("url: " + detail.getHospUrl());
         }
     }
 
-    private Stage getHostWindow(Hyperlink hyperlink) {
-        return (Stage) hyperlink.getScene().getWindow();
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
 }

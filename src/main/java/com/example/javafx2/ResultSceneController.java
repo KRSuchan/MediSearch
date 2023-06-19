@@ -90,12 +90,11 @@ public class ResultSceneController implements Initializable {
     }
 
     void onTableItemDoubleClick(HospitalDetail detail) {
-        DetailSceneController controller = new DetailSceneController();
-        controller.initData(detail);
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DetailScene.fxml"));
-            fxmlLoader.setController(controller);
             Parent root = fxmlLoader.load();
+            DetailSceneController controller = fxmlLoader.getController();
+            controller.initData(detail);
             Scene scene = new Scene(root, 576, 509);
             Stage stage = new Stage();
             stage.setTitle("Details");
