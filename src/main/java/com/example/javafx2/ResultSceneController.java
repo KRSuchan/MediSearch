@@ -14,8 +14,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import network.ReadData;
+import network.SendData;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +42,14 @@ public class ResultSceneController implements Initializable {
 
     private ArrayList<String> ykihoArray;
 
+    private Socket cliSocket = null;
+    private ObjectInputStream ois = null;
     ObservableList data = FXCollections.observableArrayList();
 
 
-    public void initData(Hospital[] hospitals) {
+    public void initData(Hospital[] hospitals, Socket cliSocket, ObjectInputStream ois) {
+        this.cliSocket = cliSocket;
+        this.ois = ois;
         for (Hospital hospital : hospitals) {
             ykihoArray.add(hospital.getYkiho());
         }
@@ -58,6 +66,16 @@ public class ResultSceneController implements Initializable {
                 if(event.getClickCount() > 1) {
                     String totalInfo = "06/=/" + ykihoArray.get(tableView.getSelectionModel().getSelectedIndex());
                     System.out.println(totalInfo);
+                    // 서버 전송 및 수신(+병원상세 객체 생성)
+                    SendData sd = new SendData(cliSocket);
+                    sd.run(totalInfo);
+
+                    ReadData rd = new ReadData(cliSocket, ois);
+                    rd.run();
+                    System.out.println("under the rd.start in ResultSceneController onDetailBtnClick");
+                    HospitalDetail hospitals = (HospitalDetail) rd.getData();
+                    System.out.println("under the hospitalDetail new Object");
+                    // 서버 전송 및 수신(+객체 생성) 종료
                     HospitalDetail detail = new HospitalDetail();
                     onTableItemDoubleClick(detail);
                 }
@@ -83,7 +101,7 @@ public class ResultSceneController implements Initializable {
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-            System.out.println(e);
+            System.err.println(e);
         }
     }
 }

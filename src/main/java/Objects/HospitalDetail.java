@@ -22,12 +22,13 @@ public class HospitalDetail implements Serializable {
     private String trmtFriEnd = "null";
     private String trmtSatStart = "null";
     private String trmtSatEnd = "null";
-    private String trmtSunStart = "null";
-    private String trmtSunEnd = "null";
+    private String trmtSunStart= "null";
+    private String trmtSunEnd= "null";
     private String lunchSat = "null";
     private String lunchWeek = "null";
     private String noTrmtHoli = "null";
     private String noTrmtSun = "null";
+
 
     public String getClcdNm() {
         return clcdNm;
@@ -111,6 +112,15 @@ public class HospitalDetail implements Serializable {
     public String getTelNo(){
         return telNo;
     }
+
+    public String getNoTrmtHoli() {
+        return noTrmtHoli;
+    }
+
+    public String getNoTrmtSun() {
+        return noTrmtSun;
+    }
+
     public void setHospUrl(String hospUrl) {
         this.hospUrl = hospUrl;
     }
@@ -187,24 +197,20 @@ public class HospitalDetail implements Serializable {
         this.trmtWedStart = trmtWedStart;
     }
 
+    public void setTrmtSunEnd(String trmtSunEnd) {
+        this.trmtSunEnd = trmtSunEnd;
+    }
+
+    public void setTrmtSunStart(String trmtSunStart) {
+        this.trmtSunStart = trmtSunStart;
+    }
+
     public void setTelNo(String telNo) {
         this.telNo = telNo;
     }
 
-    public void setTrmtSunStart(String trmtSunStart) { this.trmtSunStart = trmtSunStart; }
-
-    public void setTrmtSunEnd(String trmtSunEnd) { this.trmtSunEnd = trmtSunEnd; }
-
-    public String getNoTrmtHoli() {
-        return noTrmtHoli;
-    }
-
     public void setNoTrmtHoli(String noTrmtHoli) {
         this.noTrmtHoli = noTrmtHoli;
-    }
-
-    public String getNoTrmtSun() {
-        return noTrmtSun;
     }
 
     public void setNoTrmtSun(String noTrmtSun) {

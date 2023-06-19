@@ -233,6 +233,7 @@ public class MainSceneController {
             alert.showAndWait();
             return;
         }
+
         // 서버 전송 및 수신(+병원 객체 생성)
         SendData sd = new SendData(cliSocket);
         sd.run(totalInfo);
@@ -245,11 +246,12 @@ public class MainSceneController {
         System.out.println(totalHospitalsCnt + " hospitals are Founded.");
         // 서버 전송 및 수신(+객체 생성) 종료
 
+
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ResultScene.fxml"));
             Parent root = fxmlLoader.load();
             ResultSceneController controller = fxmlLoader.getController();
-            controller.initData(hospitals);
+            controller.initData(hospitals, cliSocket, ois);
             Scene scene = new Scene(root, 576, 509);
             Stage stage = new Stage();
             stage.setTitle("Results");
