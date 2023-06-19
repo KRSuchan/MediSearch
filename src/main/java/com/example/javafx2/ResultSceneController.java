@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -86,6 +87,54 @@ public class ResultSceneController implements Initializable {
         kindCol.setCellValueFactory(new PropertyValueFactory<>("clcdNm"));
         distanceCol.setCellValueFactory(new PropertyValueFactory<>("distanceStr"));
 
+        addressCol.setCellFactory(column -> {
+            return new TableCell<Hospital, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setAlignment(Pos.CENTER);
+                    } else {
+                        setText(item);
+                        setAlignment(Pos.CENTER);
+                    }
+                }
+            };
+        });
+
+        kindCol.setCellFactory(column -> {
+            return new TableCell<Hospital, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setAlignment(Pos.CENTER);
+                    } else {
+                        setText(item);
+                        setAlignment(Pos.CENTER);
+                    }
+                }
+            };
+        });
+
+        distanceCol.setCellFactory(column -> {
+            return new TableCell<Hospital, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setAlignment(Pos.CENTER_LEFT);
+                    } else {
+                        setText(item);
+                        setAlignment(Pos.CENTER_LEFT);
+                    }
+                }
+            };
+        });
+
         tableView.setItems(data);
     }
 
@@ -95,7 +144,7 @@ public class ResultSceneController implements Initializable {
             Parent root = fxmlLoader.load();
             DetailSceneController controller = fxmlLoader.getController();
             controller.initData(detail);
-            Scene scene = new Scene(root, 576, 509);
+            Scene scene = new Scene(root, 627, 547);
             Stage stage = new Stage();
             stage.setTitle("Details");
             stage.setScene(scene);

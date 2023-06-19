@@ -64,13 +64,6 @@ public class StoreData {
             case "의원": return "31";
             case "치과병원": return "41";
             case "치과의원": return "51";
-            case "조산원": return "61";
-            case "보건소": return "71";
-            case "보건지소": return "72";
-            case "보건진료소": return "73";
-            case "모자보건센타": return "74";
-            case "보건의료원": return "75";
-            case "약국": return "81";
             case "한방종합병원": return "91";
             case "한방병원": return "92";
             case "한의원": return "93";

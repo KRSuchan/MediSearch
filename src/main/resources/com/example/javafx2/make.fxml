@@ -50,19 +50,19 @@
             <AnchorPane layoutY="14.0" prefHeight="29.0" prefWidth="639.0" styleClass="AddressPane">
                <children>
                   <TextField fx:id="AddInput" layoutX="27.0" layoutY="2.0" onAction="#onAddressSearchAction" prefHeight="42.0" prefWidth="531.0" />
-                  <Button fx:id="AddSearchBtn" layoutX="565.0" layoutY="2.0" mnemonicParsing="false" onAction="#onAddressSearchAction" prefHeight="42.0" prefWidth="48.0" text="🔍" />
+                  <Button fx:id="AddSearchBtn" layoutX="565.0" layoutY="2.0" mnemonicParsing="false" onAction="#onAddressSearchAction" prefHeight="42.0" prefWidth="48.0" styleClass="AddSearchBtn" text="🔍" />
                </children>
             </AnchorPane>
             <AnchorPane layoutX="-1.0" layoutY="143.0" minHeight="58.0" prefHeight="80.0" prefWidth="639.0" styleClass="SizePane">
                <children>
-                  <MenuButton fx:id="SizeSelect" layoutX="47.0" layoutY="40.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="217.0" text="병원 종별을 선택하시오" />
+                  <MenuButton fx:id="SizeSelect" layoutX="47.0" layoutY="40.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="217.0" styleClass="SizeSelect" text="병원 종별을 선택하시오" />
                   <Label fx:id="SizeSelectLabel" layoutX="47.0" layoutY="7.0" text="병원 종별 선택" />
                </children></AnchorPane>
             <AnchorPane layoutX="-1.0" layoutY="265.0" minHeight="59.0" minWidth="0.0" prefHeight="80.0" prefWidth="639.0" styleClass="DistancePane">
                <children>
                   <Label layoutX="47.0" layoutY="6.0" text="직선 거리 범위 설정" />
                   <Label layoutX="311.0" layoutY="44.0" text="KM 이내" />
-                  <Slider fx:id="DistanceSlider" layoutX="47.0" layoutY="32.0" prefHeight="42.0" prefWidth="217.0" />
+                  <Slider fx:id="DistanceSlider" layoutX="47.0" layoutY="32.0" prefHeight="42.0" prefWidth="217.0" styleClass="DistanceSlider" />
                   <Label id="DistanceLabel" fx:id="DistanceLabel" alignment="CENTER_RIGHT" layoutX="275.0" layoutY="43.0" prefHeight="19.0" prefWidth="29.0" text="0.0">
                      <font>
                         <Font size="23.0" />
@@ -70,7 +70,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <Button fx:id="SearchBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="289.0" layoutY="388.0" mnemonicParsing="false" onAction="#onSearchBtnClick" prefHeight="0.0" prefWidth="59.0" text="검색" />
+            <Button fx:id="SearchBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="274.0" layoutY="373.0" mnemonicParsing="false" onAction="#onSearchBtnClick" prefHeight="34.0" prefWidth="91.0" styleClass="SearchBtn" text="검색" />
             <TitledPane fx:id="MediSelectPane" animated="false" layoutX="33.0" layoutY="93.0" prefHeight="76.0" prefWidth="574.0">
                <content>
                   <ScrollPane fx:id="MediSelectScroll" minHeight="310.0" prefHeight="310.0" prefWidth="570.0">
@@ -78,7 +78,7 @@
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                     </content>
       
-                              </ScrollPane>
+                                    </ScrollPane>
                </content>
             </TitledPane>
          </children>

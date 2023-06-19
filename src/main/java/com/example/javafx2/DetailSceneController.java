@@ -10,6 +10,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import org.locationtech.proj4j.datum.Grid;
 
@@ -65,13 +66,11 @@ public class DetailSceneController implements Initializable {
         }
         SubjectPane.setContent(subjectGrid);
 
-        if(detail.getNoTrmtHoli().equals("null"))
-            DetailGridPane.getRowConstraints().remove(HOL_TRMT_ROW);
-        else HolTrmtLabel.setText(detail.getNoTrmtHoli());
+        if(!detail.getNoTrmtHoli().equals("null"))
+            HolTrmtLabel.setText(detail.getNoTrmtHoli());
 
-        if(detail.getNoTrmtSun().equals("null"))
-            DetailGridPane.getRowConstraints().remove(SUN_TRMT_ROW);
-        else SunTrmtLabel.setText(detail.getNoTrmtSun());
+        if(!detail.getNoTrmtSun().equals("null"))
+            SunTrmtLabel.setText(detail.getNoTrmtSun());
 
         GridPane operationGrid = new GridPane();
         operationGrid.setVgap(2);
@@ -117,20 +116,11 @@ public class DetailSceneController implements Initializable {
                     operationGrid.add(new Label("\t" + detail.getLunchSat() + " 점심시간"), col, row++);
             }
         }
-        if(operationGrid.getChildren().isEmpty()) {
-            DetailGridPane.getChildren().removeIf(node -> GridPane.getRowIndex(node) == OPERATION_ROW);
-            System.out.println("operationGrid is empty");
-        }
-        else OperationPane.setContent(operationGrid);
+        if(!operationGrid.getChildren().isEmpty())
+            OperationPane.setContent(operationGrid);
 
-        if(detail.getHospUrl().equals("null")) {
-            DetailGridPane.getRowConstraints().remove(URL_ROW);
-            System.out.println("urlN: " + detail.getHospUrl());
-        }
-        else {
+        if(!detail.getHospUrl().equals("null"))
             HomepageLabel.setText(detail.getHospUrl());
-            System.out.println("url: " + detail.getHospUrl());
-        }
     }
 
     @Override

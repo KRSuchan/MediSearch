@@ -6,10 +6,21 @@
 }
 
 #SizeSelectLabel {
-
     -fx-border-width: 100px;
 }
 
 #DistanceLabel {
     -fx-font-size: 20px;
+}
+
+.AddSearchBtn {
+    -fx-background-color: #76c4ff;
+}
+
+.SizeSelect {
+    -fx-background-color: #76c4ff;
+}
+
+.SearchBtn {
+    -fx-background-color: #76c4ff;
 }
