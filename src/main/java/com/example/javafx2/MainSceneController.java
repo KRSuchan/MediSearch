@@ -17,6 +17,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import network.NetworkVO;
+import network.ReadData;
+import network.SendData;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +27,8 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+
+import static network.NetworkVO.SLEEPTIME;
 
 public class MainSceneController {
     @FXML
@@ -179,7 +183,7 @@ public class MainSceneController {
     }
 
     @FXML
-    protected void onSearchBtnClick(ActionEvent event) {
+    protected void onSearchBtnClick(ActionEvent event) throws InterruptedException {
         int mediCodeLen = 0;
         String distance = String.valueOf((int)Math.round(Double.parseDouble(DistanceLabel.getText()) * 1000));
         String mediCode = "";
@@ -203,6 +207,22 @@ public class MainSceneController {
             else
                 totalInfo = "04/=/" + AddInput.getText() + "/=/" + kindCode + distance;
         }
+
+        System.out.println("Send Data in onSearchBtnClick, MainSceneController : "+totalInfo);
+
+        // TODO : 서버 전송 및 수신(+병원 객체 생성) 위치 (전송 STRING : totalInfo)
+//
+//        SendData sd = new SendData(cliSocket);
+//        sd.run(totalInfo);
+//
+//        ReadData rd = new ReadData(cliSocket, ois);
+//        rd.start();
+//        Thread.sleep(SLEEPTIME+3000);
+//        System.out.println("under the rd.start in MainSceneController onSearchBtnClick");
+//        Hospital[] hospitals = (Hospital[]) rd.getData();
+//        int totalHospitalsCnt = hospitals.length;
+//        System.out.println(totalHospitalsCnt + " hospitals are Founded.");
+        // 서버 전송 및 수신(+객체 생성) 종료
 
         Hospital tmp1 = new Hospital();
         tmp1.setYkiho("yKiho1");
