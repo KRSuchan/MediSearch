@@ -1,0 +1,19 @@
+* {
+    -fx-font-family: "sans-serif";
+}
+
+.HospitalNamePane {
+    -fx-background-color: #76c4ff;
+    -fx-border-color: gray;
+    -fx-border-width: 0 0 1 0;
+}
+
+.HospitalNameLabel {
+    -fx-font-size: 25px;
+    -fx-font-weight: 1200;
+}
+
+.row-separator {
+    -fx-border-color: gray;
+    -fx-border-width: 0 0 1 0;
+}
