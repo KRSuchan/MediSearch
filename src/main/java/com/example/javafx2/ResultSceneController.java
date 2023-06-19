@@ -73,10 +73,10 @@ public class ResultSceneController implements Initializable {
                     ReadData rd = new ReadData(cliSocket, ois);
                     rd.run();
                     System.out.println("under the rd.start in ResultSceneController onDetailBtnClick");
-                    HospitalDetail hospitals = (HospitalDetail) rd.getData();
+                    HospitalDetail detail = (HospitalDetail) rd.getData();
                     System.out.println("under the hospitalDetail new Object");
                     // 서버 전송 및 수신(+객체 생성) 종료
-                    HospitalDetail detail = new HospitalDetail();
+
                     onTableItemDoubleClick(detail);
                 }
             }
@@ -90,11 +90,12 @@ public class ResultSceneController implements Initializable {
     }
 
     void onTableItemDoubleClick(HospitalDetail detail) {
+        DetailSceneController controller = new DetailSceneController();
+        controller.initData(detail);
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DetailScene.fxml"));
+            fxmlLoader.setController(controller);
             Parent root = fxmlLoader.load();
-            DetailSceneController controller = fxmlLoader.getController();
-            controller.initData(detail);
             Scene scene = new Scene(root, 576, 509);
             Stage stage = new Stage();
             stage.setTitle("Details");

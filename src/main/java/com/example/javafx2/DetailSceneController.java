@@ -9,9 +9,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import org.locationtech.proj4j.datum.Grid;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class DetailSceneController implements Initializable {
@@ -68,6 +70,7 @@ public class DetailSceneController implements Initializable {
 
         AnchorPane operationAnchor = new AnchorPane();
         String[] OperationTime = new String[7];
+        Arrays.fill(OperationTime, "");
         if(!detail.getTrmtMonStart().equals("null")) {
             OperationTime[0] = "월 " + detail.getTrmtMonStart().replaceFirst("(\\d{2})(\\d{2})", "$1:$2") +
                     "-" + detail.getTrmtMonEnd().replaceFirst("(\\d{2})(\\d{2})", "$1:$2");
@@ -111,6 +114,12 @@ public class DetailSceneController implements Initializable {
 
         if(detail.getHospUrl().equals("null"))
             DetailGridPane.getRowConstraints().remove(URL_ROW);
-        else HomepageLabel.setText(detail.getHospUrl());
+        else {
+            HomepageLabel.setText(detail.getHospUrl());
+        }
+    }
+
+    private Stage getHostWindow(Hyperlink hyperlink) {
+        return (Stage) hyperlink.getScene().getWindow();
     }
 }
