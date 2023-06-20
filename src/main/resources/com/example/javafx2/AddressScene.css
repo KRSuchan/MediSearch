@@ -1,5 +1,3 @@
-* {
-    -fx-font-family: Helvetica, "나눔고딕", "Nanum Gothic", "나눔스퀘어",
-    "Nanum Square", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", Dotum,
-    "돋움", sans-serif;
+.SearchBtn {
+    -fx-background-color: linear-gradient(to bottom, #76c4ff, #d0e8ff);
 }

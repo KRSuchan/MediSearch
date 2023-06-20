@@ -102,6 +102,9 @@ public class AddressSceneController {
             Stage stage = (Stage) ResultList.getScene().getWindow();
             stage.close();
         });
+        button.setStyle("-fx-background-color: linear-gradient(to right, #76c4ff, #d0e8ff);" +
+                "-fx-border-width: 1 0 1 0;" +
+                "-fx-border-color: gray;");
         ResultList.getChildren().add(button);
     }
 

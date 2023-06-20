@@ -1,20 +1,37 @@
-.ColumnOne {
-    -fx-background-color: #76c4ff;
+/*.ColumnOne {*/
+/*    -fx-background-color: #76c4ff;*/
+/*}*/
+
+/*.ColumnTwo {*/
+/*    -fx-background-color: #76c4ff;*/
+/*}*/
+
+/*.ColumnThree {*/
+/*    -fx-background-color: #76c4ff;*/
+/*}*/
+
+/*.ColumnFour {*/
+/*    -fx-background-color: #76c4ff;*/
+/*}*/
+
+.table-view {
+    -fx-background-color: transparent;
 }
 
-.ColumnTwo {
-    -fx-background-color: #76c4ff;
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
 }
 
-.ColumnThree {
-    -fx-background-color: #76c4ff;
+.table-view .corner {
+    -fx-background-color: transparent;
 }
 
-.ColumnFour {
-    -fx-background-color: #76c4ff;
+.table-view .column-header-background{
+    -fx-background-color: linear-gradient(to bottom, #76c4ff, #d0e8ff);
+    -fx-background-insets: 0 0 0 0;
+    -fx-padding: 0 0 0 0;
 }
 
-.TableView {
-
-
+.table-view .column-header {
+    -fx-background-color: transparent;
 }

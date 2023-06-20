@@ -158,7 +158,7 @@ public class MainSceneController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddressScene.fxml"));
             Parent root = fxmlLoader.load();
             AddressSceneController controller = fxmlLoader.getController();
-            Scene scene = new Scene(root, 600, 400);
+            Scene scene = new Scene(root, 600, 444);
             Stage stage = new Stage();
             stage.setTitle("Address");
             stage.setScene(scene);
@@ -251,7 +251,7 @@ public class MainSceneController {
             Parent root = fxmlLoader.load();
             ResultSceneController controller = fxmlLoader.getController();
             controller.initData(hospitals, cliSocket, ois);
-            Scene scene = new Scene(root, 600, 450);
+            Scene scene = new Scene(root, 644, 445);
             Stage stage = new Stage();
             stage.setTitle("Results");
             stage.setScene(scene);

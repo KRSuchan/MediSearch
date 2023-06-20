@@ -3,7 +3,7 @@
 }
 
 .HospitalNamePane {
-    -fx-background-color: #76c4ff;
+    -fx-background-color: linear-gradient(to bottom, #76c4ff, #d0e8ff);
     -fx-border-color: gray;
     -fx-border-width: 0 0 1 0;
 }

@@ -5,15 +5,15 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="644.0" stylesheets="@ResultScene.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx2.ResultSceneController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="445.0" prefWidth="644.0" stylesheets="@ResultScene.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx2.ResultSceneController">
    <children>
       <Label fx:id="resultLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="55.0" prefWidth="600.0" />
-      <TableView fx:id="tableView" maxWidth="603.0" prefHeight="355.0" prefWidth="603.0" styleClass="TableView">
+      <TableView fx:id="tableView" maxWidth="625.0" minWidth="603.0" prefHeight="355.0" prefWidth="625.0" styleClass="TableView">
         <columns>
           <TableColumn fx:id="nameCol" editable="false" prefWidth="160.0" resizable="false" styleClass="ColumnOne" text="병원이름" />
           <TableColumn fx:id="addressCol" editable="false" prefWidth="265.0" resizable="false" styleClass="ColumnTwo" text="병원주소" />
             <TableColumn fx:id="kindCol" editable="false" prefWidth="110.0" resizable="false" styleClass="ColumnThree" text="병원 종류" />
-            <TableColumn fx:id="distanceCol" editable="false" prefWidth="65.0" resizable="false" styleClass="ColumnFour" text="거리" />
+            <TableColumn fx:id="distanceCol" editable="false" prefWidth="88.66658528645837" resizable="false" styleClass="ColumnFour" text="거리" />
         </columns>
       </TableView>
    </children>

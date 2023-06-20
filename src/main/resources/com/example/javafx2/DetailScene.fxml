@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane prefHeight="538.0" prefWidth="600.0" stylesheets="@DetailScene.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx2.DetailSceneController">
+<AnchorPane prefHeight="553.0" prefWidth="600.0" stylesheets="@DetailScene.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx2.DetailSceneController">
    <children>
       <BorderPane prefHeight="64.0" prefWidth="600.0" styleClass="HospitalNamePane">
          <center>
@@ -44,7 +44,7 @@
             <Label fx:id="AddressLabel" prefHeight="37.0" prefWidth="502.0" GridPane.columnIndex="1" />
             <Label fx:id="KindLabel" prefHeight="37.0" prefWidth="502.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label fx:id="TelLabel" prefHeight="37.0" prefWidth="502.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Hyperlink fx:id="HomepageLabel" prefHeight="58.0" prefWidth="503.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Hyperlink fx:id="HomepageLabel" prefHeight="35.0" prefWidth="436.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label alignment="CENTER" prefHeight="51.0" prefWidth="98.0" text="일요일 휴진 안내" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="6" />
             <Label alignment="CENTER" prefHeight="51.0" prefWidth="98.0" text="공휴일 휴진 안내" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="7" />
             <Label fx:id="SunTrmtLabel" prefHeight="37.0" prefWidth="502.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />

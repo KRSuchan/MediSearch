@@ -146,10 +146,10 @@ public class ResultSceneController implements Initializable {
                     super.updateItem(item, empty);
                     if (item == null || empty) {
                         setText(null);
-                        setAlignment(Pos.CENTER_LEFT);
+                        setAlignment(Pos.CENTER);
                     } else {
                         setText(item);
-                        setAlignment(Pos.CENTER_LEFT);
+                        setAlignment(Pos.CENTER);
                     }
                 }
             };
@@ -168,7 +168,7 @@ public class ResultSceneController implements Initializable {
             Parent root = fxmlLoader.load();
             DetailSceneController controller = fxmlLoader.getController();
             controller.initData(detail);
-            Scene scene = new Scene(root, 627, 547);
+            Scene scene = new Scene(root, 600, 553);
             Stage stage = new Stage();
             stage.setTitle("Details");
             stage.setScene(scene);

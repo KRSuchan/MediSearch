@@ -1,6 +1,7 @@
 package com.example.javafx2;
 
 import Objects.HospitalDetail;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -8,12 +9,16 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+import network.ReadData;
+import network.SendData;
 import org.locationtech.proj4j.datum.Grid;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -41,6 +46,7 @@ public class DetailSceneController implements Initializable {
     @FXML
     private Label HolTrmtLabel;
     private final int URL_ROW = 4;
+
     private final int OPERATION_ROW = 5;
     private final int SUN_TRMT_ROW = 6;
     private final int HOL_TRMT_ROW = 7;
@@ -52,7 +58,7 @@ public class DetailSceneController implements Initializable {
         TelLabel.setText(detail.getTelNo());
 
         GridPane subjectGrid = new GridPane();
-        subjectGrid.setVgap(10);
+        subjectGrid.setVgap(5);
         subjectGrid.setHgap(10);
         subjectGrid.setPadding(new Insets(5, 5, 5, 5));
         int row = 0, col = 0;
@@ -119,12 +125,31 @@ public class DetailSceneController implements Initializable {
         if(!operationGrid.getChildren().isEmpty())
             OperationPane.setContent(operationGrid);
 
-        if(!detail.getHospUrl().equals("null"))
+        if(!detail.getHospUrl().equals("null")) {
             HomepageLabel.setText(detail.getHospUrl());
+            HomepageLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if(event.getClickCount() > 1) {
+                        try {
+                            open(HomepageLabel.getText());
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+            });
+        }
+
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    public void open(String url) throws Exception{
+        URI u = new URI(url);
+        java.awt.Desktop.getDesktop().browse(u);
     }
 }
