@@ -68,8 +68,7 @@ public class MainSceneController {
 
     private String[] sizes = {
             "상급종합병원", "종합병원", "병원", "요양병원", "정신병원", "의원", "치과병원",
-            "치과의원", "조산원", "보건소", "보건지소", "보건진료소", "모자보건센타", "보건의료원",
-            "약국", "한방종합병원", "한방병원", "한의원", "한약방"
+            "치과의원", "한방종합병원", "한방병원", "한의원"
     };
 
     private String searchedAddress = "";
@@ -252,7 +251,7 @@ public class MainSceneController {
             Parent root = fxmlLoader.load();
             ResultSceneController controller = fxmlLoader.getController();
             controller.initData(hospitals, cliSocket, ois);
-            Scene scene = new Scene(root, 576, 509);
+            Scene scene = new Scene(root, 600, 450);
             Stage stage = new Stage();
             stage.setTitle("Results");
             stage.setScene(scene);

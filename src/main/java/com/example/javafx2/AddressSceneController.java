@@ -49,8 +49,7 @@ public class AddressSceneController {
                 input = "01/=/" + input;
                 sd.run(input);
                 ReadData rd = new ReadData(cliSocket, ois);
-                rd.start();
-                Thread.sleep(SLEEPTIME);
+                rd.run();
                 System.out.println("under the rd.start in AddressScene initialize");
                 Address[] addresses = (Address[]) rd.getData();
                 this.totalAddressCnt = addresses.length;
