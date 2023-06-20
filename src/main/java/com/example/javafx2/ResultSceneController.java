@@ -55,6 +55,9 @@ public class ResultSceneController implements Initializable {
             ykihoArray.add(hospital.getYkiho());
         }
         data.addAll(hospitals);
+        distanceCol.setSortType(TableColumn.SortType.ASCENDING);
+        tableView.getSortOrder().add(distanceCol);
+        tableView.sort();
         resultLabel.setText(data.size() + "개의 병원이 검색되었습니다");
     }
 
@@ -158,7 +161,6 @@ public class ResultSceneController implements Initializable {
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
         tableView.setItems(data);
     }
 
